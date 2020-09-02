@@ -1,0 +1,1 @@
+/home/dams/.local/share/omf/themes/robbyrussell/fish_prompt.fish

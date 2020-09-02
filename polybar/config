@@ -1,0 +1,397 @@
+; Doc: https://github.com/jaagr/polybar
+; Wiki: https://github.com/jaagr/polybar/wiki
+
+
+;######################################
+;               INIT
+;######################################
+[colors]
+active = ${xrdb:active}  
+background = ${xrdb:background}
+foreground = ${xrdb:foreground}
+urgent = ${xrdb:color9}
+secondary = #aaa
+underline = #33f
+ram = ${xrdb:color14}
+cpu = ${xrdb:color13}
+spotify = ${xrdb:color10}
+power= ${colors.urgent}
+
+;######################################
+;               SETTINGS
+;######################################
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+
+;######################################
+;               DEFAULT BAR
+;######################################
+[bar/default]
+height = 32
+offset-y = 0
+top = true
+fixed-center = true
+
+line-size = 3
+line-color = #f00
+
+padding-left = 0
+padding-right = 3
+module-margin = 2
+
+font-0 = System San Francisco Display:size=10;2
+font-1 = FontAwesome:size=11;3
+font-2 = MaterialIcons:size=11;4
+font-3 = NotoSans-Regular:size=8;-1
+font-4 = Termsynu:size=8:antialias=false;-2
+font-5 = JoyPixels:style=Regular:scale=8;3
+font-6 = Noto Sans Mono:style=Bold
+
+;separator = %{F#999}|
+sep1 = %{F#999}|
+
+c = cpu temperature 
+modules-left = i3 system-cpu-frequency cpu temperature memory
+modules-center = xwindow
+modules-right =  network backlight volume date battery powermenu
+
+
+;------------------------------------------------ LEFT SIDE BAR ------------
+
+;######################################
+;               i3
+;######################################
+[module/i3]
+type = internal/i3
+pin-workspaces = true
+index-sort = true
+enable-click = true
+enable-scroll = false
+wrapping-scroll = false
+reverse-scroll = false
+fuzzy-match = true
+format = <label-mode><label-state>
+label-mode-padding = 2
+label-focused = %index%  %icon%
+label-focused-padding = 2
+label-unfocused = %index%  %icon%
+label-unfocused-padding = 2
+label-visible = %index%  %icon%
+label-visible-padding = 2
+label-urgent = %index%  %icon%
+label-urgent-padding = 2
+label-focused-foreground = ${colors.active}
+label-focused-background = #29373d
+label-focused-underline = ${colors.underline}
+label-visible-foreground = ${colors.active}
+label-unfocused-foreground = ${colors.secondary}
+label-urgent-foreground = ${colors.urgent}
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+
+
+; The icon selection will range from `base-temperature` to `warn-temperature`,
+; temperatures above `warn-temperature` will use the last icon
+; and temperatures below `base-temperature` will use `ramp-0`
+ramp-0 = A
+ramp-1 = B
+ramp-2 = C
+ramp-foreground = ${colors.secondary}
+ramp-2-foreground = #f00
+
+
+;######################################
+;               CPU
+;######################################
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format = <label> <ramp-coreload>
+label = CPU
+label-foreground = ${colors.secondary}
+
+
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 2
+ramp-coreload-0-foreground = #aaff77
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 2
+ramp-coreload-1-foreground = #aaff77
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 2
+ramp-coreload-2-foreground = #aaff77
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 2
+ramp-coreload-3-foreground = #aaff77
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 2
+ramp-coreload-4-foreground = #fba922
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 2
+ramp-coreload-5-foreground = #fba922
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 2
+ramp-coreload-6-foreground = #ff5555
+ramp-coreload-7 = █
+ramp-coreload-7-font = 2
+ramp-coreload-7-foreground = #ff5555
+
+
+;######################################
+;               CPU-HTZ
+;######################################
+
+[module/system-cpu-frequency]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/system-cpu-frequency/system-cpu-frequency.sh
+
+label-foreground = ${colors.secondary}
+interval = 0.5
+
+
+;######################################
+;               TEMPERATURE
+;######################################
+[module/temperature]
+type = internal/temperature
+interval = 0.5
+thermal-zone = 0
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon6/temp1_input
+; Default: 0
+base-temperature = 20
+
+; Default: 80
+warn-temperature = 70
+
+units = false
+format = <label>
+format-warn = <label-warn>
+label =%temperature-c%°C
+label-foreground = ${colors.secondary}
+label-warn = %temperature-c%°C
+label-warn-foreground = #f00
+
+
+;######################################
+;               memory
+;######################################
+[module/memory]
+type = internal/memory
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 0.5
+
+
+format = <label>
+
+label = RAM (%{F#aaff77}%gb_used%%{F#aaa}/%gb_total%)
+
+label-foreground = ${colors.secondary}
+
+
+; Only applies if <bar-used> is used
+bar-used-indicator =
+bar-used-width = 10
+bar-used-foreground-0 = #55aa55
+bar-used-foreground-1 = #557755
+bar-used-foreground-2 = #f5a70a
+bar-used-foreground-3 = #ff5555
+bar-used-fill = 
+bar-used-empty = 
+bar-used-empty-foreground = #444444
+
+;------------------------------------------------ CENTER SIDE BAR ------------
+
+;######################################
+;               XWINDOW
+;######################################
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+
+;------------------------------------------------ RIGHT SIDE BAR ------------
+
+
+
+;######################################
+;               NETWORK
+;######################################
+
+[module/network]
+type = internal/network
+interface = wlp0s20f3
+interval = 3.0
+
+; udspeed-minwidth = 5
+accumulate-stats = true
+unknown-as-up = true
+format-connected = <ramp-signal> <label-connected>
+format-disconnected = <label-disconnected>
+
+label-connected = %{A1:nm-connection-editor:}%essid% %downspeed%%{A}
+label-connected-foreground = ${colors.secondary}
+
+
+; Default: (none)
+label-disconnected = Not Connected
+label-disconnected-foreground = ${colors.secondary}
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
+
+
+;######################################
+;               BACKLIGHT
+;######################################
+[module/backlight]
+type = internal/xbacklight
+format = <ramp> <bar> 
+
+ramp-0 = 🌑
+ramp-1 = 🌒
+ramp-2 = 🌓
+ramp-3 = 🌔
+ramp-4 = 🌕
+
+bar-width = 10
+bar-indicator = 
+bar-indicator-font = 3
+bar-indicator-foreground = #ff
+bar-fill = 
+bar-fill-font = 3
+bar-fill-foreground = #c9665e
+bar-empty =  
+bar-empty-font = 3
+bar-empty-foreground = #44
+
+
+
+;######################################
+;               VOLUME
+;######################################
+[module/volume]
+type = internal/alsa
+format-volume = <ramp-volume> <bar-volume>
+format-muted =  
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-foreground = ${colors.secondary}
+bar-volume-width = 10
+bar-volume-indicator = 
+bar-volume-fill = 
+bar-volume-fill-font = 3
+bar-volume-fill-foreground = #fff
+bar-volume-empty = 
+bar-volume-empty-font = 3
+bar-volume-empty-foreground = ${colors.secondary}
+
+
+;######################################
+;               DATE
+;######################################
+[module/date]
+type = internal/date
+date = %{A1:orage:}%{F#aaa} %B %d, %H:%M%{A}
+
+
+;######################################
+;               BATTERY
+;######################################
+[module/battery]
+type = internal/battery
+
+full-at = 100
+battery = BAT0
+adapter = AC
+poll-interval = 5
+time-format = %H:%M
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging = %percentage%% (%time%) /%{F#ff7f50} %consumption%w
+label-discharging = %percentage%%
+label-full = Full
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+bar-capacity-width = 10
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+ramp-capacity-foreground =#fff
+animation-charging-foreground=#fff
+
+
+;######################################
+;               POWER
+;######################################
+[module/powermenu]
+type = custom/menu
+label-active-font = 1
+format-spacing = 1
+label-open = 
+label-open-foreground = ${colors.power}
+label-close = 
+label-close-foreground = ${colors.power}
+label-separator = |
+label-separator-foreground = ${colors.secondary}
+
+menu-0-0 = reboot
+menu-0-0-foreground = ${colors.foreground}
+menu-0-0-exec = reboot
+menu-0-1 = power off
+menu-0-1-foreground = ${colors.foreground}
+menu-0-1-exec = poweroff
+
+
+
+
+
