@@ -5,5 +5,9 @@
 !Thunar/
 !polybar/
 !misc-config/
+!README.md
+!xfce4/terminal/
+!noto-font.sh
+
 */.vim/*
 */.conky/*
