@@ -1,0 +1,172 @@
+" VIM Configuration - Vincent Jousse
+" Annule la compatibilite avec l'ancetre Vi : totalement indispensable
+set nocompatible
+
+" -- Affichage
+set title                 " Met a jour le titre de votre fenetre ou de
+                          " votre terminal
+set number                " Affiche le numero des lignes
+set ruler                 " Affiche la position actuelle du curseur
+set wrap                  " Affiche les lignes trop longues sur plusieurs
+                          " lignes
+
+set scrolloff=3           " Affiche un minimum de 3 lignes autour du curseur
+                          " (pour le scroll)
+
+" -- Recherche
+set ignorecase            " Ignore la casse lors d'une recherche
+set smartcase             " Si une recherche contient une majuscule,
+                          " re-active la sensibilite a la casse
+set incsearch             " Surligne les resultats de recherche pendant la
+                          " saisie
+set hlsearch              " Surligne les resultats de recherche
+
+" -- Beep
+set visualbell            " Empeche Vim de beeper
+
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+set noerrorbells          " Empeche Vim de beeper
+set belloff=all
+" Active le comportement 'habituel' de la touche retour en arriere
+set backspace=indent,eol,start
+
+" Cache les fichiers lors de l'ouverture d'autres fichiers
+set hidden
+
+" Active l'utilisation de la souris
+set mouse=ra
+
+" Met une une ligne rouge a droite de l'ecran (80 char)
+set cc=80
+
+" Affiche visuellementles tabs et espaces
+set list listchars=tab:\|·,trail:·
+
+" Configure les tabulations (4 espaces)
+set tabstop=4
+set shiftwidth=4
+
+" Active l'auto indentation ('==' pour auto indenter)
+set smartindent
+
+" Valeur par default pour le lightline
+set laststatus=2
+
+
+" Map auto complete of (, ", ', [
+inoremap $1 ()<esc>i
+inoremap $2 []<esc>i
+inoremap $3 {}<esc>i
+inoremap $4 {<esc>o}<esc>O
+inoremap $q ''<esc>i
+inoremap $e ""<esc>i
+
+syntax enable
+
+filetype on
+filetype plugin on
+filetype indent on
+
+
+"Installation automatig de vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-surround'
+Plug 'itchyny/vim-gitbranch'
+Plug 'ervandew/supertab'
+Plug 'tomasiser/vim-code-dark'
+Plug 'jiangmiao/auto-pairs'
+Plug 'frazrepo/vim-rainbow'
+Plug 'vim-scripts/c.vim'
+Plug 'dense-analysis/ale'
+Plug 'ericbn/vim-relativize'
+call plug#end()
+
+map , :Files<CR>
+map <C-o> :NERDTreeToggle<CR>
+let NERDTreeQuitOnOpen = 1
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+"let g:lightline = { 'colorscheme': 'challenger_deep'}
+let g:lightline = {
+	  \ 'colorscheme': 'challenger_deep',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+
+set nocp
+filetype plugin on
+
+set t_Co=256   " This is may or may not needed.
+
+
+
+" Install OmniCppComplete like described on http://vim.wikia.com/wiki/C++_code_completion
+" This offers intelligent C++ completion when typing ‘.’ ‘->’ or <C-o>
+" Load standard tag files
+set tags+=~/.vim/tags/cpp
+set tags+=~/.vim/tags/gl
+set tags+=~/.vim/tags/sdl
+set tags+=~/.vim/tags/qt4
+" build tags of your own project with Ctrl-F12
+map <C-F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extras=+q .<CR>
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
+
+"hi Pmenu        cterm=none ctermfg=White     ctermbg=DarkGrey
+"hi PmenuSel     cterm=none ctermfg=Black     ctermbg=Blue
+"hi PmenuSbar    cterm=none ctermfg=none      ctermbg=Blue
+"hi PmenuThumb   cterm=none ctermfg=DarkGreen ctermbg=DarkBlue
+
+colorscheme codedark
+let g:rainbow_active = 1
+
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.c' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+let  g:C_UseTool_cmake    = 'yes'
+let  g:C_UseTool_doxygen = 'yes'
+
+
+set relativenumber
+set number relativenumber
+
+set clipboard=unnamed

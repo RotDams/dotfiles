@@ -4,3 +4,6 @@
 !fish/
 !Thunar/
 !polybar/
+!misc-config/
+*/.vim/*
+*/.conky/*

@@ -1,0 +1,138 @@
+conky.config = {
+--==============================================================================
+--                                  conkyrc_displaymax
+--  author  : autocrosser
+--  version : v20171201
+--  license : Distributed under the terms of GNU GPL version 2 or later
+--==============================================================================
+-- Conky settings #
+	background = true,
+	update_interval = 0.5,
+        cpu_avg_samples = 2,
+	net_avg_samples = 2,
+	temperature_unit = 'celsius',
+	double_buffer = true,
+	no_buffers = true,
+
+-- Text settings #
+	override_utf8_locale = true,
+        use_xft = true,
+        font = 'Mono:size=10',
+	xftalpha = 0.7,
+	uppercase = false,
+	text_buffer_size = 2048,
+        uppercase = false,
+
+-- Alignment & Minimum size #
+	gap_x = 3,
+	gap_y = 35,
+        minimum_height = 1000,
+	minimum_width = 400,
+
+-- Misc Console #
+        out_to_console = false,
+        out_to_stderr = false,
+        extra_newline = false,
+
+-- Window specifications #
+        own_window = true,
+        own_window_class = 'Conky',
+        own_window_type = 'desktop',
+	own_window_argb_visual = true,
+	own_window_argb_value = 120,
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	own_window_colour = '#000',
+	background = true,
+	border_inner_margin = 0,
+	border_outer_margin = 0,
+	alignment = 'top_right',
+
+-- Graphics settings #
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = true,
+        stippled_borders = 0,
+        border_width = 1,
+	default_color = 'white',
+        default_outline_color = 'white',
+        default_shade_color = 'white',
+        use_spacer = 'none',
+        show_graph_scale = false,
+        show_graph_range = false,
+
+}
+
+conky.text = [[
+${color #0D0060}${hr 3}
+${color blue}${font zekton:style=Bold:pixelsize=24}$nodename${font Freesans}
+${color grey}${font zekton:style=Bold:pixelsize=14}$sysname $kernel on $machine
+${color #0D0060}${hr 3}
+${color grey}${font zekton:style=Bold:pixelsize=16}System:${font Freesans:size=12}${alignc}${color grey}Uptime:$color $uptime
+${alignc}${color grey}CPU Speed:$color $freq_g GHZ
+${alignc}${color grey}Updates: ${execi 360 aptitude search "~U" | wc -l | tail}
+${color #0D0060}${hr 3}
+${color grey}${font zekton:style=Bold:pixelsize=16}CPUs:${font Freesans}
+${voffset -10}
+ ${color grey}CPU1:$color ${cpu cpu 0}%${goto 100}${execi 5 sensors|grep 'Core 0'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu0}
+ ${color grey}CPU2:$color ${cpu cpu 1}%${goto 100}${execi 5 sensors|grep 'Core 1'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu1}
+ ${color grey}CPU3:$color ${cpu cpu 2}%${goto 100}${execi 5 sensors|grep 'Core 2'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu2}
+ ${color grey}CPU4:$color ${cpu cpu 3}%${goto 100}${execi 5 sensors|grep 'Core 3'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu3}
+${color #0D0060}${hr 3}
+${color grey}${font zekton:style=Bold:pixelsize=16}Memory:${font Freesans}
+${voffset -10}
+ ${color grey}RAM:$color $mem of $memmax - $memperc% ${color blue}${membar 6}
+ ${color grey}Swap:$color $swap of $swapmax - $swapperc% ${color blue}${swapbar 6}
+${color #0D0060}${hr 3}
+${color grey}${font zekton:style=Bold:pixelsize=16}Filesystems:${font Freesans}
+${voffset -10}
+ Root    $color${fs_used /} of ${fs_size /} ${color blue}${fs_bar 6 /}${color grey}
+ Home    $color${fs_used /home} of ${fs_size /home} ${color blue}${fs_bar 6 /home}${color grey}
+ Storage $color${fs_used /media/Storage} of ${fs_size /media/Storage} ${color blue}${fs_bar 6 /media/Storage}
+${color #0D0060}${hr 3}
+${color grey}${font zekton:style=Bold:pixelsize=16}Processes:$color $processes${color grey}${goto 145}Running:$color $running_processes${font Freesans}
+${voffset -10}
+${color grey}Name                ${goto 150}PID    ${goto 250}CPU%    ${goto 350}MEM%
+${color lightgrey} ${top name 1} ${goto 150}${top pid 1} ${goto 250}${top cpu 1} ${goto 350}${top mem 1}
+${color lightgrey} ${top name 2} ${goto 150}${top pid 2} ${goto 250}${top cpu 2} ${goto 350}${top mem 2}
+${color lightgrey} ${top name 3} ${goto 150}${top pid 3} ${goto 250}${top cpu 3} ${goto 350}${top mem 3}
+${color lightgrey} ${top name 4} ${goto 150}${top pid 4} ${goto 250}${top cpu 4} ${goto 350}${top mem 4}
+${color lightgrey} ${top name 5} ${goto 150}${top pid 5} ${goto 250}${top cpu 5} ${goto 350}${top mem 5}
+${color lightgrey} ${top name 6} ${goto 150}${top pid 6} ${goto 250}${top cpu 6} ${goto 350}${top mem 6}
+${color lightgrey} ${top name 7} ${goto 150}${top pid 7} ${goto 250}${top cpu 7} ${goto 350}${top mem 7}
+${color lightgrey} ${top name 8} ${goto 150}${top pid 8} ${goto 250}${top cpu 8} ${goto 350}${top mem 8}
+${color #0D0060}${hr 3}
+${color grey}${font zekton:style=Bold:pixelsize=16}Networking:${font Freesans}
+${voffset -4}
+ Down:$color ${downspeed wlp0s20f3}${goto 125}Total Down: ${totaldown wlp0s20f3}
+${alignc}${color #27B7F6}${downspeedgraph wlp0s20f3 20,260 000000 27B7F6}${color grey}
+
+ Up:$color ${upspeed wlp0s20f3}${goto 125}Total Up: ${totalup wlp0s20f3}
+${alignc}${color #273DF6}${upspeedgraph wlp0s20f3 20,260 000000 273DF6}
+${voffset -5}
+${font Freesans:size=9}${color blue}${alignc}Wan: ${exec sh .conky/getip.sh}
+${alignc}Lan: ${addr wlp0s20f3}
+
+${font Freesans}${color blue} Outbound Connections:  ${color white}${tcp_portmon 32768 61000 count}
+${font Freesans:size=8}${color white}${tcp_portmon 32768 61000 rhost 0}
+${tcp_portmon 32768 61000 rhost 1}
+${tcp_portmon 32768 61000 rhost 2}
+${tcp_portmon 32768 61000 rhost 3}
+${tcp_portmon 32768 61000 rhost 4}
+${tcp_portmon 32768 61000 rhost 5}
+${tcp_portmon 32768 61000 rhost 6}
+${font Freesans}${color blue} Inbound Connections:  ${color white}${tcp_portmon 1 32767 count}
+${font Freesans:size=8}${color white}${tcp_portmon 1 32767 rhost 0}
+${tcp_portmon 1 32767 rhost 1}
+${tcp_portmon 1 32767 rhost 2}
+${tcp_portmon 1 32767 rhost 3}
+${tcp_portmon 1 32767 rhost 4}
+${color #0D0060}${hr 3}
+]]
+
+-- ${color grey}${font zekton:style=Bold:pixelsize=16}Temps:${font Freesans}${alignc}${color grey}GPU Core0:  ${color white}${exec nvidia-settings -t -q [gpu:0]/GPUCoreTemp} °C
+-- ${alignc}${color grey}GPU Core1:  ${color white}${exec nvidia-settings -t -q [gpu:1]/GPUCoreTemp} °C
+-- ${alignc}${color grey}HDD1:  ${color white}${hddtemp /dev/sda} °C  ${color grey}HDD2:  ${color white}${hddtemp /dev/sdb} °C
+--  ${alignc}${color grey}HDD3:  ${color white}${hddtemp /dev/sdc} °C  ${color grey}HDD4:  ${color white}${hddtemp /dev/sdd} °C
+-- ${alignc}${color grey}MOBO Ambient:  ${color white}${execi 1 /usr/bin/sensors | grep temp2| paste -s | cut -d+ -f2 | cut -c1-2} °C
+-- ${color #0D0060}${hr 3}
