@@ -20,7 +20,7 @@ alias wlist="nmcli device wifi list"
 alias wconnect="nmcli dev wifi connect"
 alias wifi="nmtui"
 alias light="xbacklight -set"
-
+alias bl ="blueberry"
 
 
 

@@ -58,7 +58,7 @@ sep1 = %{F#999}|
 c = cpu temperature 
 modules-left = i3 system-cpu-frequency cpu temperature memory
 modules-center = xwindow
-modules-right =  network backlight volume date battery powermenu
+modules-right = bluetooth network backlight volume date battery powermenu
 
 
 ;------------------------------------------------ LEFT SIDE BAR ------------
@@ -226,6 +226,15 @@ label = %title:0:30:...%
 
 ;------------------------------------------------ RIGHT SIDE BAR ------------
 
+[module/bluetooth]
+type = custom/script
+exec = ~/.config/polybar/polybar-scripts/bluetooth/bluetooth.sh
+interval = 2
+click-left = exec blueberry
+click-right = exec ~/.config/polybar/polybar-scripts/bluetooth/toggle_bluetooth.sh
+format-padding = 1
+format-background = #000000
+format-foreground = #ffffff
 
 
 ;######################################
@@ -390,8 +399,9 @@ menu-0-0-exec = reboot
 menu-0-1 = power off
 menu-0-1-foreground = ${colors.foreground}
 menu-0-1-exec = poweroff
-
-
+menu-0-2 = i3-lock
+menu-0-2-foreground = ${colors.foreground}
+menu-0-2-exec = i3lock -i ~/.config/i3/pictures/night-city.png
 
 
 

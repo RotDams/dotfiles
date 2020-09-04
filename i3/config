@@ -42,7 +42,7 @@ client.placeholder      $background $background $foreground    #000000   $inacti
 client.background       $background
 
 # Applications
-exec_always --no-startup-id feh --bg-scale /home/dams/images/background/night-city-v2.jpg #/usr/share/backgrounds/illyria-default.jpg
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/pictures/night-city.png
 exec_always --no-startup-id picom
 exec_always --no-startup-id "killall polybar;polybar -r default"
 exec --no-startup-id "amixer -c 0 set Master playback 0% unmute"
@@ -112,26 +112,25 @@ bindsym Print exec xfce4-screenshooter
 
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 5+ unmute"
-bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 5- unmute"
-bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
+bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 5+ unmute & ~/.config/i3/scripts/vol-notify"
+bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 5- unmute & ~/.config/i3/scripts/vol-notify"
+bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle & ~/.config/i3/scripts/vol-notify"
+
+bindsym Shift+XF86AudioRaiseVolume exec "amixer -q sset Master,0 1+ unmute & ~/.config/i3/scripts/vol-notify"
+bindsym Shift+XF86AudioLowerVolume exec "amixer -q sset Master,0 1- unmute & ~/.config/i3/scripts/vol-notify"
 
 bindsym XF86AudioMicMute exec "amixer -q sset Dmic0 toggle"
 
 
 
 # Screen brightness controls
- bindsym XF86MonBrightnessUp exec "xbacklight -inc 10" 
+ bindsym XF86MonBrightnessUp exec xbacklight -inc 10 & exec ~/.config/i3/scripts/brightness-notify
+ bindsym XF86MonBrightnessDown exec xbacklight -dec 10 & exec ~/.config/i3/scripts/brightness-notify
 
-#; notify-send 'brightness up'"
- bindsym XF86MonBrightnessDown exec "xbacklight -dec 10" 
-
-#; notify-send 'brightness down'"  
-#
+ bindsym Shift+XF86MonBrightnessUp exec xbacklight -inc 1 & exec ~/.config/i3/scripts/brightness-notify
+ bindsym Shift+XF86MonBrightnessDown exec xbacklight -dec 1 & exec ~/.config/i3/scripts/brightness-notify
 
 
-#bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+ # increase screen brightness
-#bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%- # decrease screen brightness
 ###############################
 #        WORKSPACES           #
 ###############################
@@ -240,6 +239,9 @@ focus_follows_mouse yes
 
 exec_always --no-startup-id volumeicon
 
+##bar {
+##       status_command i3status
+##}
 
 #bar {
 #    status_command $HOME/bin/conky-i3bar
