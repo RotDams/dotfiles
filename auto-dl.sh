@@ -1,18 +1,20 @@
 #.config/auto-dl.sh
 
 PACMAN = 'pacman --noconfirm'
+YAY = 'yay --noconfirm'
+
 $PACMAN -Syyu
-git clone https://aur.archlinux.org/yay.git
-cd yay
+git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
+cd ~/temp-conf/yay
 makepkg -si
-cd ~
 
 $PACMAN -S feh
 
-yay -S i3-gaps
+$YAY -S i3-gaps
 
-git clone https://github.com/RotDams/dotfile ~/Downloads/dotfile
-mv -r ~/Downloads/dotfile/* ~/.config/
+git clone https://github.com/RotDams/dotfile ~/temp-conf/dotfile
+mv ~/temp-conf/dotfile/* ~/.config/
+rm -rf ~/temp-conf
 
 $PACMAN -S blueberry 
 
@@ -37,9 +39,9 @@ mkdir ~/.config/picom/
 cp /etc/xdg/picom.conf ~/.config/picom/picom.conf
 picom --config ~/.config/picom/picom.conf
 
-sudo yay -S polybar
-yay -S ttf-font-awesome-4
-yay -S ttf-joypixels
+$YAY -S polybar
+$YAY -S ttf-font-awesome-4
+$YAY -S ttf-joypixels
 $PACMAN -S bluez-utils
 sudo ~/.config/misc-config/noto-font.sh
 ln -s .config/misc-config/.Xresources .Xresources   
