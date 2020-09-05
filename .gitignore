@@ -7,6 +7,8 @@
 !README.md
 !xfce4/terminal/
 !noto-font.sh
+!auto-dl.sh
+
 
 */.vim/*
 */.conky/*
