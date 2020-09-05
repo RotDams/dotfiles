@@ -1,7 +1,7 @@
 #.config/auto-dl.sh
 
-PACMAN='pacman --noconfirm'
-YAY='yay --noconfirm'
+PACMAN='sudo pacman --noconfirm'
+YAY='sudo yay --noconfirm'
 
 $PACMAN -Syyu
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
