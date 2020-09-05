@@ -1,7 +1,7 @@
 #.config/auto-dl.sh
 
 PACMAN='sudo pacman --noconfirm'
-YAY='sudo yay --noconfirm'
+YAY='yay --noconfirm'
 
 $PACMAN -Syyu
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
@@ -44,4 +44,4 @@ $YAY -S ttf-font-awesome-4
 $YAY -S ttf-joypixels
 $PACMAN -S bluez-utils
 sudo ~/.config/misc-config/noto-font.sh
-ln -s .config/misc-config/.Xresources .Xresources   
+ln -s ~/.config/misc-config/.Xresources ~/.Xresources   
