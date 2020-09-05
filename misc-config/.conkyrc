@@ -110,7 +110,7 @@ ${alignc}${color #27B7F6}${downspeedgraph wlp0s20f3 20,260 000000 27B7F6}${color
  Up:$color ${upspeed wlp0s20f3}${goto 125}Total Up: ${totalup wlp0s20f3}
 ${alignc}${color #273DF6}${upspeedgraph wlp0s20f3 20,260 000000 273DF6}
 ${voffset -5}
-${font Freesans:size=9}${color blue}${alignc}Wan: ${exec sh .conky/getip.sh}
+${font Freesans:size=9}${color blue}${alignc}Wan: ${exec sh .config/misc-config/getip.sh}
 ${alignc}Lan: ${addr wlp0s20f3}
 
 ${font Freesans}${color blue} Outbound Connections:  ${color white}${tcp_portmon 32768 61000 count}
