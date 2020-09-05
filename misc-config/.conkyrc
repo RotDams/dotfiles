@@ -17,7 +17,7 @@ conky.config = {
 -- Text settings #
 	override_utf8_locale = true,
         use_xft = true,
-        font = 'Mono:size=10',
+        font = 'Mono:size=8',
 	xftalpha = 0.7,
 	uppercase = false,
 	text_buffer_size = 2048,
