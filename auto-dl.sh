@@ -11,7 +11,7 @@ $PACMAN -S feh
 
 yay -S i3-gaps
 
-git clone https://github.com/RotDams/dotfile ~/Download
+git clone https://github.com/RotDams/dotfile ~/Download/dotfile
 mv -r ~/Download/dotfile/* ~/.config/
 
 $PACMAN -S blueberry 
