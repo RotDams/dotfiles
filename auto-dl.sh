@@ -1,6 +1,6 @@
 #.config/auto-dl.sh
 
-$PACMAN = 'pacman --noconfirm'
+PACMAN = 'pacman --noconfirm'
 $PACMAN -Syyu
 git clone https://aur.archlinux.org/yay.git
 cd yay
@@ -13,7 +13,6 @@ yay -S i3-gaps
 
 git clone https://github.com/RotDams/dotfile ~/Download
 mv -r ~/Download/dotfile/* ~/.config/
-rm -r ~/Download/dotfile
 
 $PACMAN -S blueberry 
 
