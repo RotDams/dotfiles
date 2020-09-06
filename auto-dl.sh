@@ -2,13 +2,13 @@
 
 read -p 'password : ' -s pass
 
-PACMAN="echo $pass | sudo -S pacman --noconfirm"
+PACMAN="sudo pacman --noconfirm"
 YAY="yay --answerdiff=None"
 
-echo $pass | sudo pacman -Syyu
+echo $pass | sudo -S pacman -Syyu
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
 cd ~/temp-conf/yay
-echo $pass | makepkg -si
+makepkg -si
 
 $PACMAN -S feh
 
