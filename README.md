@@ -1,9 +1,15 @@
-# Personal DotFile
+# Personal DotFile [Rot Dam's](https://github.com/rotdams).
 
-## About
+## Automatic installation
+1. **Installing manjaro through its [website](https://manjaro.org/download/).** (XFCE).
 
+2. **clone the current repository and exec the script**
+```bash
+git clone https://github.com/rotdams/dotfile && ./dotfile/auto-dl.sh
+```
+3. **restart the computer and config you login manager profile (do not forget to choose i3)**
 
-## Getting started
+## Manual installation
 
 1. **Installing manjaro through its [website](https://manjaro.org/download/).** (XFCE).
 
@@ -40,7 +46,7 @@ rm -rf dotfile
 ```bash
 sudo pacman -S blueberry 
 ```
-
+ 
 8. **Install `perl` .** 
 ```bash
 sudo pacman -S perl 
