@@ -1,9 +1,9 @@
 #.config/auto-dl.sh
 
-read -p 'password : ' pass
+read -p 'password : ' -s pass
 
 PACMAN="echo $pass | sudo pacman --noconfirm"
-YAY="echo $pass | yay --answerdiff=None --noconfirm"
+YAY="echo $pass | yay --answerdiff=None --nocleanmenu --nodiffmenu"
 
 $PACMAN -Syyu
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
@@ -28,7 +28,7 @@ $PACMAN -S gvim
 ln -s ~/.config/misc-config/.vimrc ~/.vimrc
 
 $PACMAN -S zsh
-chsh -s /usr/bin/zsh
+echo $pass | chsh -s /usr/bin/zsh
 ln -s ~/.config/misc-config/.zshrc ~/.zshrc
 
 $PACMAN -S tree
@@ -51,5 +51,3 @@ ln -s ~/.config/misc-config/.Xresources ~/.Xresources
 $PACMAN -S --needed lightdm-webkit2-greeter lightdm-webkit-theme-litarvan
 sudo sed -i 's/greeter-session=/greeter-session=lightdm-webkit2-greeter\n# /g' /etc/lightdm/lightdm.conf
 sudo sed -i 's/webkit_theme        =/webkit_theme        = litarvan\n# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
-
-reboot
