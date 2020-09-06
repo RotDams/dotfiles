@@ -25,13 +25,6 @@ $PACMAN -S rofi
 $PACMAN -S gvim 
 ln -s ~/.config/misc-config/.vimrc ~/.vimrc
 
-$PACMAN -S fish
-curl -L https://get.oh-my.fish | fish
-omf install robbyrussell
-omf theme robbyrussell
-set -U fish_greeting ""
-
-
 $PACMAN -S zsh
 chsh -s /usr/bin/zsh
 ln -s ~/.config/misc-config/.zshrc ~/.zshrc
@@ -55,4 +48,4 @@ ln -s ~/.config/misc-config/.Xresources ~/.Xresources
 
 $PACMAN -S --needed lightdm-webkit2-greeter lightdm-webkit-theme-litarvan
 sudo sed -i 's/greeter-session=/greeter-session=lightdm-greeter-session\n# /g' /etc/lightdm/lightdm.conf
-sudo sed -i 's/webkit_theme        =/webkit_theme        =litarvan\n# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
+sudo sed -i 's/webkit_theme        =/webkit_theme        =litarvan# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
