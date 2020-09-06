@@ -1,12 +1,12 @@
 #.config/auto-dl.sh
 
 PACMAN="sudo pacman --noconfirm"
-YAY="sudo -u $myuser yay --noconfirm"
+YAY="sudo -u $myuser yay"
 
-echo $pass | sudo -S pacman -Syyu
+sudo pacman -Syyu --noconfirm
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
 cd ~/temp-conf/yay
-sudo -u makepkg -si
+makepkg -si --noconfirm
 
 $PACMAN -S feh
 
@@ -26,7 +26,6 @@ $PACMAN -S gvim
 ln -s ~/.config/misc-config/.vimrc ~/.vimrc
 
 $PACMAN -S zsh
-echo $pass | chsh -s /usr/bin/zsh
 ln -s ~/.config/misc-config/.zshrc ~/.zshrc
 
 $PACMAN -S tree
@@ -49,3 +48,5 @@ ln -s ~/.config/misc-config/.Xresources ~/.Xresources
 $PACMAN -S --needed lightdm-webkit2-greeter lightdm-webkit-theme-litarvan
 sudo sed -i 's/greeter-session=/greeter-session=lightdm-webkit2-greeter\n# /g' /etc/lightdm/lightdm.conf
 sudo sed -i 's/webkit_theme        =/webkit_theme        = litarvan\n# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
+
+chsh -s /usr/bin/zsh
