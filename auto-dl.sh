@@ -1,7 +1,9 @@
 #.config/auto-dl.sh
 
-PACMAN='sudo pacman --noconfirm'
-YAY='yay --noconfirm'
+read -p 'password : ' pass
+
+PACMAN="echo $pass | sudo pacman --noconfirm"
+YAY="echo $pass | yay --answerdiff=None --noconfirm"
 
 $PACMAN -Syyu
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
@@ -48,4 +50,6 @@ ln -s ~/.config/misc-config/.Xresources ~/.Xresources
 
 $PACMAN -S --needed lightdm-webkit2-greeter lightdm-webkit-theme-litarvan
 sudo sed -i 's/greeter-session=/greeter-session=lightdm-webkit2-greeter\n# /g' /etc/lightdm/lightdm.conf
-sudo sed -i 's/webkit_theme        =/webkit_theme        =litarvan# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
+sudo sed -i 's/webkit_theme        =/webkit_theme        = litarvan\n# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
+
+reboot
