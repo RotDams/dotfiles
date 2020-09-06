@@ -87,8 +87,8 @@ ${color #0D0060}${hr 3}
 ${color grey}${font zekton:style=Bold:pixelsize=16}Filesystems:${font Freesans}
 ${voffset -10}
  Root    $color${fs_used /} of ${fs_size /} ${color blue}${fs_bar 6 /}${color grey}
- Home    $color${fs_used /home} of ${fs_size /home} ${color blue}${fs_bar 6 /home}${color grey}
- Storage $color${fs_used /media/Storage} of ${fs_size /media/Storage} ${color blue}${fs_bar 6 /media/Storage}
+ Downloads    $color${fs_used /home/dams/Downloads} of ${fs_size /home/dams/Downloads} ${color blue}${fs_bar 6 /home/dams/Downloads}${color grey}
+ SSD $color${fs_used /run/media/dams/Extreme SSD/} of ${fs_size /run/media/dams/Extreme SSD/} ${color blue}${fs_bar 6 /run/media/dams/Extreme SSD/}
 ${color #0D0060}${hr 3}
 ${color grey}${font zekton:style=Bold:pixelsize=16}Processes:$color $processes${color grey}${goto 145}Running:$color $running_processes${font Freesans}
 ${voffset -10}

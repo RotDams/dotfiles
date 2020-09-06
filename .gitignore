@@ -8,7 +8,10 @@
 !xfce4/terminal/
 !noto-font.sh
 !auto-dl.sh
-
-
+!xfce4/
+/xfce4/*
+!xfce4/terminal/
+/xfce4/terminal/*
+!xfce4/terminal/terminalrc
 */.vim/*
 */.conky/*
