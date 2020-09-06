@@ -1,14 +1,12 @@
 #.config/auto-dl.sh
 
-read -p 'password : ' -s pass
-
 PACMAN="sudo pacman --noconfirm"
-YAY="yay --answerdiff=None"
+YAY="sudo -u $myuser yay --noconfirm"
 
 echo $pass | sudo -S pacman -Syyu
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
 cd ~/temp-conf/yay
-makepkg -si
+sudo -u makepkg -si
 
 $PACMAN -S feh
 
