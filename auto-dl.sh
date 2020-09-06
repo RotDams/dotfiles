@@ -3,9 +3,9 @@
 read -p 'password : ' -s pass
 
 PACMAN="echo $pass | sudo -S pacman --noconfirm"
-YAY="echo $pass | yay --answerdiff=None --nocleanmenu --nodiffmenu"
+YAY="yay --answerdiff=None"
 
-$PACMAN -Syyu
+echo $pass | sudo pacman -Syyu
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
 cd ~/temp-conf/yay
 echo $pass | makepkg -si
