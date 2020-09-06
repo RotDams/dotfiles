@@ -1,7 +1,7 @@
 #.config/auto-dl.sh
 
 PACMAN="sudo pacman --noconfirm"
-YAY="sudo -u $myuser yay"
+YAY="yay -S --noconfirm"
 
 sudo pacman -Syyu --noconfirm
 git clone https://aur.archlinux.org/yay.git ~/temp-conf/yay
@@ -10,7 +10,7 @@ makepkg -si --noconfirm
 
 $PACMAN -S feh
 
-$YAY -S i3-gaps
+$YAY i3-gaps
 
 git clone https://github.com/RotDams/dotfile ~/temp-conf/dotfile
 mv ~/temp-conf/dotfile/* ~/.config/
@@ -38,11 +38,11 @@ mkdir ~/.config/picom/
 cp /etc/xdg/picom.conf ~/.config/picom/picom.conf
 picom --config ~/.config/picom/picom.conf
 
-$YAY -S polybar
-$YAY -S ttf-font-awesome-4
-$YAY -S ttf-joypixels
+$YAY polybar
+$YAY ttf-font-awesome-4
+$YAY ttf-joypixels
 $PACMAN -S bluez-utils
-sudo ~/.config/misc-config/noto-font.sh
+sudo ~/.config/misc-config/noto-font.sh --noconfirm
 ln -s ~/.config/misc-config/.Xresources ~/.Xresources   
 
 $PACMAN -S --needed lightdm-webkit2-greeter lightdm-webkit-theme-litarvan
