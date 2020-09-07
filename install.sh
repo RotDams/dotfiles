@@ -1,4 +1,4 @@
-#!/.config/install.sh
+#/.config/install.sh
  
  
 username="$(logname)"
