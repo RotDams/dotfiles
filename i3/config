@@ -17,6 +17,9 @@ set $mod Mod4
 #          APPARENCE          #
 ###############################
 
+# Screen
+bindsym $mod+Shift+s exec flameshot gui 
+
 # Focus la fenêtre au survol
 focus_follows_mouse no
 
