@@ -5,16 +5,16 @@ YAY="yay -S --noconfirm"
 username="$(logname)"
 
 sudo pacman -Syyu --noconfirm
-git clone https://aur.archlinux.org/yay.git /home/$username/temp-conf/yay
-cd /home/$username/temp-conf/yay
+git clone https://aur.archlinux.org/yay.git /tmp/yay
+cd /tmp/yay
 sudo -u $username makepkg -si --noconfirm
 
 $PACMAN -S feh
 
 $YAY i3-gaps
 
-git clone https://github.com/RotDams/dotfile /home/$username/temp-conf/dotfile
-mv /home/$username/temp-conf/dotfile/* /home/$username/.config/
+git clone https://github.com/RotDams/dotfile /tmp/dotfile
+mv /tmp/dotfile/* /home/$username/.config/
 rm -rf /home/$username/temp-conf
 
 $PACMAN -S blueberry 
