@@ -4,12 +4,12 @@
 username="$(logname)"
 PACMAN="pacman --noconfirm"
 YAY="sudo -u $username yay -S --noconfirm"
- 
-sudo pacman -Syyu --noconfirm
- 
+
 sudo -u $username git clone https://github.com/RotDams/dotfile /home/$username/temp-conf/dotfile
 sudo -u $username /home/$username/temp-conf/dotfile/yay-dl.sh
- 
+  
+sudo pacman -Syyu --noconfirm
+
 $PACMAN -S feh
  
 $YAY i3-gaps
