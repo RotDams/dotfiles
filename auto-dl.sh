@@ -2,8 +2,8 @@
 
 PACMAN="sudo pacman --noconfirm"
 YAY="yay -S --noconfirm"
-username=$logname
-echo "\ncurrent user name = $logname\n"
+username=logname
+echo "\ncurrent user name = $username\n"
 
 sudo pacman -Syyu --noconfirm
 git clone https://aur.archlinux.org/yay.git /home/$username/temp-conf/yay
