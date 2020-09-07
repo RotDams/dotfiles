@@ -7,8 +7,8 @@
 !README.md
 !xfce4/terminal/
 !noto-font.sh
-!install.sh
-!auto-dl.sh
+!yay-dl.sh
+!config-install.sh
 !xfce4/
 /xfce4/*
 !xfce4/terminal/

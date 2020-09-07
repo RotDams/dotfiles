@@ -5,10 +5,15 @@ username="$(logname)"
 PACMAN="pacman --noconfirm"
 YAY="sudo -u $username yay -S --noconfirm"
  
+sudo pacman -Syyu --noconfirm
+ 
+sudo -u $username ./yay-dl.sh
+ 
 $PACMAN -S feh
  
 $YAY i3-gaps
  
+git clone https://github.com/RotDams/dotfile /home/$username/temp-conf/dotfile
 mv /home/$username/temp-conf/dotfile/* /home/$username/.config/
 rm -rf /home/$username/temp-conf
  
@@ -45,4 +50,6 @@ $PACMAN -S --needed lightdm-webkit2-greeter lightdm-webkit-theme-litarvan
 sudo sed -i 's/greeter-session=/greeter-session=lightdm-webkit2-greeter\n# /g' /etc/lightdm/lightdm.conf
 sudo sed -i 's/webkit_theme        =/webkit_theme        = litarvan\n# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
  
-chsh -s /usr/bin/zsh
+usermod --shell /usr/bin/zsh $username
+ 
+ 
