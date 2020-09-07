@@ -8,5 +8,5 @@ git clone https://github.com/RotDams/dotfile /home/$username/temp-conf/dotfile
 cd /home/$username/temp-conf/yay && makepkg -si --noconfirm
  
 cd /home/$username/temp-conf/dotfile
-sudo ./auto-dl.sh
+sudo -u root ./auto-dl.sh
  
