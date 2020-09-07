@@ -5,7 +5,7 @@
 
 2. **clone the current repository and exec the script**
 ```bash
-git clone https://github.com/rotdams/dotfile && sudo ./dotfile/auto-dl.sh
+git clone https://github.com/rotdams/dotfile && ./dotfile/install.sh
 ```
 3. **restart the computer and config you login manager profile (do not forget to choose i3)**
 
