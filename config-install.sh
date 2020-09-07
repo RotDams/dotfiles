@@ -1,4 +1,4 @@
-
+ 
 #.config/auto-dl.sh
  
 username="$(logname)"
@@ -7,13 +7,13 @@ YAY="sudo -u $username yay -S --noconfirm"
  
 sudo pacman -Syyu --noconfirm
  
-sudo -u $username ./yay-dl.sh
+sudo -u $username git clone https://github.com/RotDams/dotfile /home/$username/temp-conf/dotfile
+sudo -u $username /home/$username/temp-conf/dotfile/yay-dl.sh
  
 $PACMAN -S feh
  
 $YAY i3-gaps
- 
-git clone https://github.com/RotDams/dotfile /home/$username/temp-conf/dotfile
+
 mv /home/$username/temp-conf/dotfile/* /home/$username/.config/
 rm -rf /home/$username/temp-conf
  
@@ -51,5 +51,3 @@ sudo sed -i 's/greeter-session=/greeter-session=lightdm-webkit2-greeter\n# /g' /
 sudo sed -i 's/webkit_theme        =/webkit_theme        = litarvan\n# /g' /etc/lightdm/lightdm-webkit2-greeter.conf
  
 usermod --shell /usr/bin/zsh $username
- 
- 
