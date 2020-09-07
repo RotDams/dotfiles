@@ -6,7 +6,7 @@ YAY="yay -S --noconfirm"
 sudo pacman -Syyu --noconfirm
 git clone https://aur.archlinux.org/yay.git /home/logname/temp-conf/yay
 cd /home/logname/temp-conf/yay
-sudo -u makepkg -si --noconfirm
+sudo -u logname makepkg -si --noconfirm
 
 $PACMAN -S feh
 
