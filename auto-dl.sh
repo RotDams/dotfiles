@@ -5,9 +5,6 @@ username="$(logname)"
 PACMAN="pacman --noconfirm"
 YAY="sudo -u $username yay -S --noconfirm"
  
- 
-pacman -Syyu --noconfirm
- 
 $PACMAN -S feh
  
 $YAY i3-gaps
