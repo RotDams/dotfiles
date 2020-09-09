@@ -73,19 +73,16 @@ ${alignc}${color grey}CPU Speed:$color $freq_g GHZ
 ${alignc}${color grey}Updates: ${execi 360 aptitude search "~U" | wc -l | tail}
 ${color #0D0060}${hr 3}
 ${color grey}${font zekton:style=Bold:pixelsize=16}CPUs:${font Freesans}
-${voffset -10}
  ${color grey}CPU1:$color ${cpu cpu 0}%${goto 100}${execi 5 sensors|grep 'Core 0'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu0}
  ${color grey}CPU2:$color ${cpu cpu 1}%${goto 100}${execi 5 sensors|grep 'Core 1'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu1}
  ${color grey}CPU3:$color ${cpu cpu 2}%${goto 100}${execi 5 sensors|grep 'Core 2'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu2}
  ${color grey}CPU4:$color ${cpu cpu 3}%${goto 100}${execi 5 sensors|grep 'Core 3'| awk -F'+' '{print $2}' | awk -F'.' '{print $1}'} °C ${color blue}${cpubar cpu3}
 ${color #0D0060}${hr 3}
 ${color grey}${font zekton:style=Bold:pixelsize=16}Memory:${font Freesans}
-${voffset -10}
  ${color grey}RAM:$color $mem of $memmax - $memperc% ${color blue}${membar 6}
  ${color grey}Swap:$color $swap of $swapmax - $swapperc% ${color blue}${swapbar 6}
 ${color #0D0060}${hr 3}
 ${color grey}${font zekton:style=Bold:pixelsize=16}Filesystems:${font Freesans}
-${voffset -10}
  Root    $color${fs_used /} of ${fs_size /} ${color blue}${fs_bar 6 /}${color grey}
  Downloads    $color${fs_used /home/dams/Downloads} of ${fs_size /home/dams/Downloads} ${color blue}${fs_bar 6 /home/dams/Downloads}${color grey}
  SSD $color${fs_used /run/media/dams/Extreme SSD/} of ${fs_size /run/media/dams/Extreme SSD/} ${color blue}${fs_bar 6 /run/media/dams/Extreme SSD/}
@@ -103,30 +100,19 @@ ${color lightgrey} ${top name 7} ${goto 150}${top pid 7} ${goto 250}${top cpu 7}
 ${color lightgrey} ${top name 8} ${goto 150}${top pid 8} ${goto 250}${top cpu 8} ${goto 350}${top mem 8}
 ${color #0D0060}${hr 3}
 ${color grey}${font zekton:style=Bold:pixelsize=16}Networking:${font Freesans}
-${voffset -4}
  Down:$color ${downspeed wlp0s20f3}${goto 125}Total Down: ${totaldown wlp0s20f3}
 ${alignc}${color #27B7F6}${downspeedgraph wlp0s20f3 20,260 000000 27B7F6}${color grey}
 
  Up:$color ${upspeed wlp0s20f3}${goto 125}Total Up: ${totalup wlp0s20f3}
 ${alignc}${color #273DF6}${upspeedgraph wlp0s20f3 20,260 000000 273DF6}
-${voffset -5}
 ${font Freesans:size=9}${color blue}${alignc}Wan: ${exec sh .config/misc-config/getip.sh}
 ${alignc}Lan: ${addr wlp0s20f3}
-
-${font Freesans}${color blue} Outbound Connections:  ${color white}${tcp_portmon 32768 61000 count}
-${font Freesans:size=8}${color white}${tcp_portmon 32768 61000 rhost 0}
-${tcp_portmon 32768 61000 rhost 1}
-${tcp_portmon 32768 61000 rhost 2}
-${tcp_portmon 32768 61000 rhost 3}
-${tcp_portmon 32768 61000 rhost 4}
-${tcp_portmon 32768 61000 rhost 5}
-${tcp_portmon 32768 61000 rhost 6}
-${font Freesans}${color blue} Inbound Connections:  ${color white}${tcp_portmon 1 32767 count}
-${font Freesans:size=8}${color white}${tcp_portmon 1 32767 rhost 0}
-${tcp_portmon 1 32767 rhost 1}
-${tcp_portmon 1 32767 rhost 2}
-${tcp_portmon 1 32767 rhost 3}
-${tcp_portmon 1 32767 rhost 4}
+${font Freesans}${color blue} Outbound:  ${color white}${tcp_portmon 32768 61000 count}${goto 280}${font Freesans}${color blue} Inbound:  ${color white}${tcp_portmon 1 32767 count}
+${font Freesans:size=8}${color white}${tcp_portmon 32768 61000 rhost 0}${goto 200}${tcp_portmon 1 32767 rhost 0}
+${tcp_portmon 32768 61000 rhost 1}${goto 200}${tcp_portmon 1 32767 rhost 1}
+${tcp_portmon 32768 61000 rhost 2}${goto 200}${tcp_portmon 1 32767 rhost 2}
+${tcp_portmon 32768 61000 rhost 3}${goto 200}${tcp_portmon 1 32767 rhost 3}
+${tcp_portmon 32768 61000 rhost 4}${goto 200}${tcp_portmon 1 32767 rhost 4}
 ${color #0D0060}${hr 3}
 ]]
 
