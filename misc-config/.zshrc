@@ -23,7 +23,6 @@ alias light="xbacklight -set"
 alias bl="blueberry"
 
 
-
 # USAGE
 # If you are using this file as your ~/.zshrc file, please use ~/.zshrc.pre
 # and ~/.zshrc.local for your own customisations. The former file is read

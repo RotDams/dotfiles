@@ -1,11 +1,11 @@
-# Personal DotFile [Rot Dam's](https://github.com/rotdams).
+# Personal dotfiles [Rot Dam's](https://github.com/rotdams).
 
 ## Automatic installation
 1. **Installing manjaro through its [website](https://manjaro.org/download/).** (XFCE).
 
 2. **clone the current repository and exec the script**
 ```bash
-git clone https://github.com/rotdams/dotfile && sudo ./dotfile/config-install.sh
+git clone https://github.com/rotdams/dotfiles && sudo ./dotfiles/config-install.sh
 ```
 3. **restart the computer and config you login manager profile (do not forget to choose i3)**
 
@@ -37,9 +37,9 @@ sudo yay -S i3-gaps
 6. **get my configs** 
 ```bash
 cd ~
-git clone https://github.com/RotDams/dotfile
-mv -r dotfile/* .config/
-rm -rf dotfile
+git clone https://github.com/RotDams/dotfiles
+mv -r dotfiles/* .config/
+rm -rf dotfiles
 ```
 
 7. **Install `blueberry` .** 

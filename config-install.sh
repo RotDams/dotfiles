@@ -5,8 +5,8 @@ PACMAN="pacman --noconfirm"
 YAY="sudo -u $username yay -S --noconfirm"
 
 # Download YAY
-sudo -u $username git clone https://github.com/RotDams/dotfile /home/$username/temp-conf/dotfile
-sudo -u $username /home/$username/temp-conf/dotfile/yay-dl.sh
+sudo -u $username git clone https://github.com/RotDams/dotfiles /home/$username/temp-conf/dotfiles
+sudo -u $username /home/$username/temp-conf/dotfiles/yay-dl.sh
 
 # Pacman update
 sudo pacman -Syyu --noconfirm
@@ -16,7 +16,7 @@ $PACMAN -S feh
  
  # i3
 $YAY i3-gaps
-mv /home/$username/temp-conf/dotfile/* /home/$username/.config/
+mv /home/$username/temp-conf/dotfiles/* /home/$username/.config/
 rm -rf /home/$username/temp-conf
 
 # bluetooth manager 
