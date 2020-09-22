@@ -17,7 +17,13 @@ changeTemp() {
   fi
 }
 
-case $1 in 
+case $1 in
+  on) 
+    if [ "$REDSHIFT" = on ];
+    then
+      redshift -O "$REDSHIFT_TEMP"
+    fi
+    ;;
   toggle) 
     if [ "$REDSHIFT" = on ];
     then

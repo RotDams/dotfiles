@@ -16,6 +16,7 @@ ram = ${xrdb:color14}
 cpu = ${xrdb:color13}
 spotify = ${xrdb:color10}
 power= ${colors.urgent}
+bg-trans = ${xrdb:argbBg:#80FF0000}
 
 ;######################################
 ;               SETTINGS
@@ -31,7 +32,92 @@ margin-bottom = 5
 ;######################################
 ;               DEFAULT BAR
 ;######################################
+
+[bar/screen-2]
+monitor = ${env:MONITOR:}
+height = 32
+offset-y = 0
+top = true
+fixed-center = true
+
+line-size = 3
+line-color = #f00
+
+padding-left = 0
+padding-right = 3
+module-margin = 2
+
+font-0 = System San Francisco Display:size=10;2
+font-1 = FontAwesome:size=11;3
+font-2 = MaterialIcons:size=11;4
+font-3 = NotoSans-Regular:size=8;-1
+font-4 = Termsynu:size=8:antialias=false;-2
+font-5 = JoyPixels:style=Regular:scale=8;3
+font-6 = Noto Sans Mono:style=Bold
+
+tray-position = right
+tray-padding = 0
+
+override-redirect = false
+
+
+;separator = %{F#999}|
+sep1 = %{F#999}|
+
+c = cpu temperature 
+modules-left = i3 
+modules-center = xwindow
+modules-right =  network date 
+
+
+
+
+
+[bar/default-tray]
+monitor = ${env:MONITOR:}
+height = 32
+offset-y = 0
+top = true
+fixed-center = true
+
+line-size = 3
+line-color = #f00
+
+padding-left = 0
+padding-right = 3
+module-margin = 2
+
+font-0 = System San Francisco Display:size=10;2
+font-1 = FontAwesome:size=11;3
+font-2 = MaterialIcons:size=11;4
+font-3 = NotoSans-Regular:size=8;-1
+font-4 = Termsynu:size=8:antialias=false;-2
+font-5 = JoyPixels:style=Regular:scale=8;3
+font-6 = Noto Sans Mono:style=Bold
+
+tray-position = right
+tray-detached = true
+tray-padding = 0
+
+tray-offset-y = 97%
+
+override-redirect = false
+tray-background = $(bg-trans)
+
+
+;separator = %{F#999}|
+sep1 = %{F#999}|
+
+c = cpu temperature 
+modules-left = i3 system-cpu-frequency cpu temperature memory
+modules-center = xwindow
+modules-right = bluetooth network redshift backlight volume date battery powermenu
+
+
+
+
 [bar/default]
+monitor = ${env:MONITOR:}
 height = 32
 offset-y = 0
 top = true
@@ -318,6 +404,7 @@ format-foreground = ${colors.secondary}
 ;######################################
 [module/volume]
 type = internal/alsa
+
 format-volume = <ramp-volume> <bar-volume>
 format-muted =  
 ramp-volume-0 = 
