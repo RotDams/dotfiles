@@ -17,6 +17,10 @@ set $mod Mod4
 #          APPARENCE          #
 ###############################
 
+# Moving workspaces between screens 
+bindsym $mod+Prior move workspace to output up
+bindsym $mod+Next move workspace to output right
+
 # Screen
 bindsym $mod+Shift+s exec flameshot gui 
 
@@ -47,12 +51,21 @@ client.background       $background
 # Applications
 exec_always --no-startup-id feh --bg-scale ~/.config/i3/pictures/night-city.png
 exec_always --no-startup-id picom
-exec_always --no-startup-id "killall polybar;polybar -r default"
+#exec_always --no-startup-id "killall polybar;polybar -r default"
+
+exec --no-startup-id "xrandr --output \"eDP1\" --primary --auto --output \"HDMI2\" --above \"eDP1\" --mode 1920x1080 --output \"DP1\" --right-of \"HDMI2\" --mode 1920x1080"
+exec_always --no-startup-id "~/.config/polybar/launch_polybar.sh"
+
 exec --no-startup-id "amixer -c 0 set Master playback 0% unmute"
+exec_always --no-startup-id "source ~/.config/polybar/scripts/env.sh && ~/.config/polybar/scripts/redshift.sh on"
+
 
 ###############################
 #         KEYBINDING          #
 ###############################
+
+bindsym XF86Favorites exec --no-startup-id "killall polybar;polybar -r default-tray"
+bindsym Shift+XF86Favorites exec --no-startup-id "~/.config/polybar/launch_polybar.sh"
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -111,7 +124,8 @@ bindsym $mod+q focus parent
 #bindsym $mod+d focus child
 
 # Screen tool
-bindsym Print exec xfce4-screenshooter
+bindsym Print exec flameshot screen -n 1 -c
+# xfce4-screenshooter
 
 
 # Pulse Audio controls
@@ -141,6 +155,8 @@ bindsym XF86AudioMicMute exec "amixer -q sset Dmic0 toggle"
 
 
 set $monitorCenter eDP1
+set $monitorTop HDMI2
+set $monitorRight DP1
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -153,6 +169,16 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+set $ws11 "11"
+set $ws12 "12"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
+set $ws20 "20"
 
 # switch to workspace
 workspace $ws1 output $monitorCenter
@@ -160,11 +186,22 @@ workspace $ws2 output $monitorCenter
 workspace $ws3 output $monitorCenter
 workspace $ws4 output $monitorCenter
 workspace $ws5 output $monitorCenter
-workspace $ws6 output $monitorCenter
-workspace $ws7 output $monitorCenter
-workspace $ws8 output $monitorCenter
-workspace $ws9 output $monitorCenter
-workspace $ws10 output $monitorCenter
+workspace $ws6 output $monitorTop
+workspace $ws7 output $monitorTop
+workspace $ws8 output $monitorTop
+workspace $ws9 output $monitorTop
+workspace $ws10 output $monitorTop
+
+workspace $ws11 output $monitorRight
+workspace $ws12 output $monitorRight
+workspace $ws13 output $monitorRight
+workspace $ws14 output $monitorRight
+workspace $ws15 output $monitorRight
+workspace $ws16 output $monitorRight
+workspace $ws17 output $monitorRight
+workspace $ws18 output $monitorRight
+workspace $ws19 output $monitorRight
+workspace $ws20 output $monitorRight
 
 
 # switch to workspace
@@ -179,6 +216,17 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9 
 bindsym $mod+0 workspace number $ws10
 
+bindsym Control+1 workspace number $ws11 
+bindsym Control+2 workspace number $ws12
+bindsym Control+3 workspace number $ws13 
+bindsym Control+4 workspace number $ws14 
+bindsym Control+5 workspace number $ws15
+bindsym Control+6 workspace number $ws16
+bindsym Control+7 workspace number $ws17
+bindsym Control+8 workspace number $ws18 
+bindsym Control+9 workspace number $ws19 
+bindsym Control+0 workspace number $ws20 
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
@@ -191,6 +239,16 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+bindsym Control+Shift+1 move container to workspace number $ws11
+bindsym Control+Shift+2 move container to workspace number $ws12
+bindsym Control+Shift+3 move container to workspace number $ws13
+bindsym Control+Shift+4 move container to workspace number $ws14
+bindsym Control+Shift+5 move container to workspace number $ws15
+bindsym Control+Shift+6 move container to workspace number $ws16
+bindsym Control+Shift+7 move container to workspace number $ws17
+bindsym Control+Shift+8 move container to workspace number $ws18
+bindsym Control+Shift+9 move container to workspace number $ws19
+bindsym Control+Shift+0 move container to workspace number $ws20
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -210,7 +268,7 @@ mode "resize" {
         bindsym j resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym l resize shrink height 10 px or 10 ppt
-        bindsym m resize grow width 10 px or 10 ppt
+        bindsym h resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
