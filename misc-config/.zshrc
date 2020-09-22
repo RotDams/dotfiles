@@ -21,8 +21,10 @@ alias wconnect="nmcli dev wifi connect"
 alias wifi="nmtui"
 alias light="xbacklight -set"
 alias bl="blueberry"
-
-
+alias screen2on="xrandr --output \"eDP1\" --primary --auto --output \"HDMI2\" --above \"eDP1\" --mode 1920x1080 && ~/.config/polybar/launch_polybar.sh"
+alias screen2off="xrandr --output HDMI2 --off"
+alias samescreen="killall polybar; polybar -r default & sleep 1; xrandr --output HDMI2 --same-as eDP1"
+alias poly="~/.config/polybar/launch_polybar.sh"
 # USAGE
 # If you are using this file as your ~/.zshrc file, please use ~/.zshrc.pre
 # and ~/.zshrc.local for your own customisations. The former file is read
