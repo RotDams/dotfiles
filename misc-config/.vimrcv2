@@ -2,18 +2,7 @@
 " Annule la compatibilite avec l'ancetre Vi : totalement indispensable
 set nocompatible
 
-set expandtab
-
-set shiftround
-
-set autoindent
-
-set smarttab
-
-set linebreak
-
-set history=5000
-
+vnoremap <C-C> "+y
 " -- Affichage
 set title                 " Met a jour le titre de votre fenetre ou de
                           " votre terminal
@@ -47,7 +36,7 @@ set backspace=indent,eol,start
 set hidden
 
 " Active l'utilisation de la souris
-set mouse=a
+set mouse=ra
 
 " Met une une ligne rouge a droite de l'ecran (80 char)
 set cc=80
@@ -97,15 +86,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/vim-gitbranch'
 Plug 'ervandew/supertab'
-" Plug 'tomasiser/vim-code-dark'
+Plug 'tomasiser/vim-code-dark'
 Plug 'jiangmiao/auto-pairs'
 Plug 'frazrepo/vim-rainbow'
 Plug 'vim-scripts/c.vim'
 Plug 'dense-analysis/ale'
 Plug 'ericbn/vim-relativize'
-Plug 'file://'.expand('~/apps/epistyle-master')
 Plug 'hzchirs/vim-material'
-
 call plug#end()
 
 map , :Files<CR>
@@ -186,14 +173,10 @@ set number relativenumber
 
 set clipboard=unnamed
 
-if (has('nvim'))
-    let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
-endif
-
-if (has('termguicolors'))
-    set termguicolors
-endif
 
 let g:material_style='oceanic'
+set background=dark
+colorscheme vim-material
+" Dark
 set background=dark
 colorscheme vim-material
