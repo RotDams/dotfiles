@@ -1,3 +1,26 @@
+SSH_ENV="$HOME/.ssh/agent-environment"
+
+function start_agent {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    #chmod 600 "${SSH_ENV}"
+    #. "${SSH_ENV}" > /dev/null
+    #/usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
 # Filename:      /etc/zsh/zshrc
 # Purpose:       config file for zsh (z shell)
 # Authors:       grml-team (grml.org), (c) Michael Prokop <mika@grml.org>
@@ -25,6 +48,14 @@ alias screen2on="xrandr --output \"eDP1\" --primary --auto --output \"HDMI2\" --
 alias screen2off="xrandr --output HDMI2 --off"
 alias samescreen="killall polybar; polybar -r default & sleep 1; xrandr --output HDMI2 --same-as eDP1"
 alias poly="~/.config/polybar/launch_polybar.sh"
+alias gl="git log --all --decorate --oneline --graph --color=always"
+alias cf="cat *.c &
+    clang-format *.c && clang-format -i *.c"
+alias gdb="gdb -q"
+alias addmake="cp -r ~/mk/. ."
+alias gf="gcc -Wall -Wextra -std=c99 -pedantic -Werror -fsanitize=address"
+alias capson="xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'"
+alias capsoff="xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'"
 # USAGE
 # If you are using this file as your ~/.zshrc file, please use ~/.zshrc.pre
 # and ~/.zshrc.local for your own customisations. The former file is read
