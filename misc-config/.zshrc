@@ -4,8 +4,8 @@ function start_agent {
     echo "Initialising new SSH agent..."
     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
     echo succeeded
-    #chmod 600 "${SSH_ENV}"
-    #. "${SSH_ENV}" > /dev/null
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
     #/usr/bin/ssh-add;
 }
 
@@ -21,6 +21,8 @@ else
     start_agent;
 fi
 
+export VISUAL=vim
+export EDITOR="$VISUAL"
 # Filename:      /etc/zsh/zshrc
 # Purpose:       config file for zsh (z shell)
 # Authors:       grml-team (grml.org), (c) Michael Prokop <mika@grml.org>
@@ -50,7 +52,7 @@ alias samescreen="killall polybar; polybar -r default & sleep 1; xrandr --output
 alias poly="~/.config/polybar/launch_polybar.sh"
 alias gl="git log --all --decorate --oneline --graph --color=always"
 alias cf="cat *.c &
-    clang-format *.c && clang-format -i *.c"
+clang-format *.c && clang-format -i *.c"
 alias gdb="gdb -q"
 alias addmake="cp -r ~/mk/. ."
 alias gf="gcc -Wall -Wextra -std=c99 -pedantic -Werror -fsanitize=address"
@@ -185,21 +187,21 @@ function is43 () {
 
 function is433 () {
     [[ $ZSH_VERSION == 4.3.<3->* || $ZSH_VERSION == 4.<4->* \
-                                 || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
+        || $ZSH_VERSION == <5->* ]] && return 0
+            return 1
+        }
 
-function is437 () {
-    [[ $ZSH_VERSION == 4.3.<7->* || $ZSH_VERSION == 4.<4->* \
-                                 || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
+    function is437 () {
+        [[ $ZSH_VERSION == 4.3.<7->* || $ZSH_VERSION == 4.<4->* \
+            || $ZSH_VERSION == <5->* ]] && return 0
+                    return 1
+                }
 
-function is439 () {
-    [[ $ZSH_VERSION == 4.3.<9->* || $ZSH_VERSION == 4.<4->* \
-                                 || $ZSH_VERSION == <5->* ]] && return 0
-    return 1
-}
+            function is439 () {
+                [[ $ZSH_VERSION == 4.3.<9->* || $ZSH_VERSION == 4.<4->* \
+                    || $ZSH_VERSION == <5->* ]] && return 0
+                                    return 1
+                                }
 
 #f1# Checks whether or not you're running grml
 function isgrml () {
@@ -214,7 +216,7 @@ function isgrmlcd () {
 }
 
 if isgrml ; then
-#f1# Checks whether or not you're running grml-small
+    #f1# Checks whether or not you're running grml-small
     function isgrmlsmall () {
         if [[ ${${${(f)"$(</etc/grml_version)"}%% *}##*-} == 'small' ]]; then
             return 0
@@ -263,36 +265,36 @@ function isutfenv () {
 # important for rungetty -> autologin
 # Thanks go to Bart Schaefer!
 isgrml && function checkhome () {
-    if [[ -z "$ALREADY_DID_CD_HOME" ]] ; then
-        export ALREADY_DID_CD_HOME=$HOME
-        cd
-    fi
+if [[ -z "$ALREADY_DID_CD_HOME" ]] ; then
+    export ALREADY_DID_CD_HOME=$HOME
+    cd
+fi
 }
 
 # check for zsh v3.1.7+
 
 if ! [[ ${ZSH_VERSION} == 3.1.<7->*      \
-     || ${ZSH_VERSION} == 3.<2->.<->*    \
-     || ${ZSH_VERSION} == <4->.<->*   ]] ; then
+    || ${ZSH_VERSION} == 3.<2->.<->*    \
+    || ${ZSH_VERSION} == <4->.<->*   ]] ; then
 
-    printf '-!-\n'
-    printf '-!- In this configuration we try to make use of features, that only\n'
-    printf '-!- require version 3.1.7 of the shell; That way this setup can be\n'
-    printf '-!- used with a wide range of zsh versions, while using fairly\n'
-    printf '-!- advanced features in all supported versions.\n'
-    printf '-!-\n'
-    printf '-!- However, you are running zsh version %s.\n' "$ZSH_VERSION"
-    printf '-!-\n'
-    printf '-!- While this *may* work, it might as well fail.\n'
-    printf '-!- Please consider updating to at least version 3.1.7 of zsh.\n'
-    printf '-!-\n'
-    printf '-!- DO NOT EXPECT THIS TO WORK FLAWLESSLY!\n'
-    printf '-!- If it does today, you'\''ve been lucky.\n'
-    printf '-!-\n'
-    printf '-!- Ye been warned!\n'
-    printf '-!-\n'
+printf '-!-\n'
+printf '-!- In this configuration we try to make use of features, that only\n'
+printf '-!- require version 3.1.7 of the shell; That way this setup can be\n'
+printf '-!- used with a wide range of zsh versions, while using fairly\n'
+printf '-!- advanced features in all supported versions.\n'
+printf '-!-\n'
+printf '-!- However, you are running zsh version %s.\n' "$ZSH_VERSION"
+printf '-!-\n'
+printf '-!- While this *may* work, it might as well fail.\n'
+printf '-!- Please consider updating to at least version 3.1.7 of zsh.\n'
+printf '-!-\n'
+printf '-!- DO NOT EXPECT THIS TO WORK FLAWLESSLY!\n'
+printf '-!- If it does today, you'\''ve been lucky.\n'
+printf '-!-\n'
+printf '-!- Ye been warned!\n'
+printf '-!-\n'
 
-    function zstyle () { : }
+function zstyle () { : }
 fi
 
 # autoload wrapper - use this one instead of autoload directly
@@ -327,73 +329,73 @@ function zrcautoload () {
 # compact. This definition can be removed as soon as we raise the minimum
 # version requirement to 4.3.7 or newer.
 function add-zsh-hook () {
-    # Add to HOOK the given FUNCTION.
-    # HOOK is one of chpwd, precmd, preexec, periodic, zshaddhistory,
-    # zshexit, zsh_directory_name (the _functions subscript is not required).
-    #
-    # With -d, remove the function from the hook instead; delete the hook
-    # variable if it is empty.
-    #
-    # -D behaves like -d, but pattern characters are active in the function
-    # name, so any matching function will be deleted from the hook.
-    #
-    # Without -d, the FUNCTION is marked for autoload; -U is passed down to
-    # autoload if that is given, as are -z and -k. (This is harmless if the
-    # function is actually defined inline.)
-    emulate -L zsh
-    local -a hooktypes
-    hooktypes=(
-        chpwd precmd preexec periodic zshaddhistory zshexit
-        zsh_directory_name
-    )
-    local usage="Usage: $0 hook function\nValid hooks are:\n  $hooktypes"
-    local opt
-    local -a autoopts
-    integer del list help
-    while getopts "dDhLUzk" opt; do
-        case $opt in
+# Add to HOOK the given FUNCTION.
+# HOOK is one of chpwd, precmd, preexec, periodic, zshaddhistory,
+# zshexit, zsh_directory_name (the _functions subscript is not required).
+#
+# With -d, remove the function from the hook instead; delete the hook
+# variable if it is empty.
+#
+# -D behaves like -d, but pattern characters are active in the function
+# name, so any matching function will be deleted from the hook.
+#
+# Without -d, the FUNCTION is marked for autoload; -U is passed down to
+# autoload if that is given, as are -z and -k. (This is harmless if the
+# function is actually defined inline.)
+emulate -L zsh
+local -a hooktypes
+hooktypes=(
+    chpwd precmd preexec periodic zshaddhistory zshexit
+    zsh_directory_name
+)
+local usage="Usage: $0 hook function\nValid hooks are:\n  $hooktypes"
+local opt
+local -a autoopts
+integer del list help
+while getopts "dDhLUzk" opt; do
+    case $opt in
         (d) del=1 ;;
         (D) del=2 ;;
         (h) help=1 ;;
         (L) list=1 ;;
         ([Uzk]) autoopts+=(-$opt) ;;
         (*) return 1 ;;
-        esac
-    done
-    shift $(( OPTIND - 1 ))
-    if (( list )); then
-        typeset -mp "(${1:-${(@j:|:)hooktypes}})_functions"
-        return $?
-    elif (( help || $# != 2 || ${hooktypes[(I)$1]} == 0 )); then
-        print -u$(( 2 - help )) $usage
-        return $(( 1 - help ))
+    esac
+done
+shift $(( OPTIND - 1 ))
+if (( list )); then
+    typeset -mp "(${1:-${(@j:|:)hooktypes}})_functions"
+    return $?
+elif (( help || $# != 2 || ${hooktypes[(I)$1]} == 0 )); then
+    print -u$(( 2 - help )) $usage
+    return $(( 1 - help ))
+fi
+local hook="${1}_functions"
+local fn="$2"
+if (( del )); then
+    # delete, if hook is set
+    if (( ${(P)+hook} )); then
+        if (( del == 2 )); then
+            set -A $hook ${(P)hook:#${~fn}}
+        else
+            set -A $hook ${(P)hook:#$fn}
+        fi
+        # unset if no remaining entries --- this can give better
+        # performance in some cases
+        if (( ! ${(P)#hook} )); then
+            unset $hook
+        fi
     fi
-    local hook="${1}_functions"
-    local fn="$2"
-    if (( del )); then
-        # delete, if hook is set
-        if (( ${(P)+hook} )); then
-            if (( del == 2 )); then
-                set -A $hook ${(P)hook:#${~fn}}
-            else
-                set -A $hook ${(P)hook:#$fn}
-            fi
-            # unset if no remaining entries --- this can give better
-            # performance in some cases
-            if (( ! ${(P)#hook} )); then
-                unset $hook
-            fi
+else
+    if (( ${(P)+hook} )); then
+        if (( ${${(P)hook}[(I)$fn]} == 0 )); then
+            set -A $hook ${(P)hook} $fn
         fi
     else
-        if (( ${(P)+hook} )); then
-            if (( ${${(P)hook}[(I)$fn]} == 0 )); then
-                set -A $hook ${(P)hook} $fn
-            fi
-        else
-            set -A $hook $fn
-        fi
-        autoload $autoopts -- $fn
+        set -A $hook $fn
     fi
+    autoload $autoopts -- $fn
+fi
 }
 
 # Load is-at-least() for more precise version checks Note that this test will
@@ -480,7 +482,7 @@ typeset -ga grep_options
 # Colors on GNU ls(1)
 if ls --color=auto / >/dev/null 2>&1; then
     ls_options+=( --color=auto )
-# Colors on FreeBSD and OSX ls(1)
+    # Colors on FreeBSD and OSX ls(1)
 elif ls -G / >/dev/null 2>&1; then
     ls_options+=( -G )
 fi
@@ -531,7 +533,7 @@ function check_com () {
         || (( ${+functions[$1]}   )) \
         || (( ${+aliases[$1]}     )) \
         || (( ${+reswords[(r)$1]} )) ; then
-        return 0
+            return 0
     fi
 
     if (( gatoo > 0 )) && (( ${+galiases[$1]} )) ; then
@@ -616,9 +618,9 @@ function xunfunction () {
     for func in $funcs ; do
         [[ -n ${functions[$func]} ]] \
             && unfunction $func
-    done
-    return 0
-}
+        done
+        return 0
+    }
 
 # this allows us to stay in sync with grml's zshrc and put own
 # modifications in ~/.zshrc.local
@@ -640,7 +642,7 @@ builtin unset -v var
 
 # set some variables
 if check_com -c vim ; then
-#v#
+    #v#
     export EDITOR=${EDITOR:-vim}
 else
     export EDITOR=${EDITOR:-vi}
@@ -701,9 +703,9 @@ typeset -U path PATH cdpath CDPATH fpath FPATH manpath MANPATH
 
 # Load a few modules
 is4 && \
-for mod in parameter complist deltochar mathfunc ; do
-    zmodload -i zsh/${mod} 2>/dev/null || print "Notice: no ${mod} available :("
-done && builtin unset -v mod
+    for mod in parameter complist deltochar mathfunc ; do
+        zmodload -i zsh/${mod} 2>/dev/null || print "Notice: no ${mod} available :("
+    done && builtin unset -v mod
 
 # autoload zsh modules when they are referenced
 if is4 ; then
@@ -821,12 +823,12 @@ function grmlcomp () {
 
     # Search path for sudo completion
     zstyle ':completion:*:sudo:*' command-path /usr/local/sbin \
-                                               /usr/local/bin  \
-                                               /usr/sbin       \
-                                               /usr/bin        \
-                                               /sbin           \
-                                               /bin            \
-                                               /usr/X11R6/bin
+        /usr/local/bin  \
+        /usr/sbin       \
+        /usr/bin        \
+        /sbin           \
+        /bin            \
+        /usr/X11R6/bin
 
     # provide .. as a completion
     zstyle ':completion:*' special-dirs ..
@@ -846,15 +848,15 @@ function grmlcomp () {
         # try to be smart about when to use what completer...
         setopt correct
         zstyle -e ':completion:*' completer '
-            if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
-                _last_try="$HISTNO$BUFFER$CURSOR"
-                reply=(_complete _match _ignored _prefix _files)
+        if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
+            _last_try="$HISTNO$BUFFER$CURSOR"
+            reply=(_complete _match _ignored _prefix _files)
+        else
+            if [[ $words[1] == (rm|mv) ]] ; then
+                reply=(_complete _files)
             else
-                if [[ $words[1] == (rm|mv) ]] ; then
-                    reply=(_complete _files)
-                else
-                    reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
-                fi
+                reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
+            fi
             fi'
     fi
 
@@ -877,19 +879,19 @@ function grmlcomp () {
         [[ -r ~/.ssh/config ]] && _ssh_config_hosts=(${${(s: :)${(ps:\t:)${${(@M)${(f)"$(<$HOME/.ssh/config)"}:#Host *}#Host }}}:#*[*?]*}) || _ssh_config_hosts=()
         [[ -r ~/.ssh/known_hosts ]] && _ssh_hosts=(${${${${(f)"$(<$HOME/.ssh/known_hosts)"}:#[\|]*}%%\ *}%%,*}) || _ssh_hosts=()
         [[ -r /etc/hosts ]] && : ${(A)_etc_hosts:=${(s: :)${(ps:\t:)${${(f)~~"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}}} || _etc_hosts=()
-    else
-        _ssh_config_hosts=()
-        _ssh_hosts=()
-        _etc_hosts=()
+        else
+            _ssh_config_hosts=()
+            _ssh_hosts=()
+            _etc_hosts=()
     fi
 
     local localname
     if check_com hostname ; then
-      localname=$(hostname)
+        localname=$(hostname)
     elif check_com hostnamectl ; then
-      localname=$(hostnamectl --static)
+        localname=$(hostnamectl --static)
     else
-      localname="$(uname -n)"
+        localname="$(uname -n)"
     fi
 
     hosts=(
@@ -906,9 +908,9 @@ function grmlcomp () {
     # use generic completion system for programs not yet defined; (_gnu_generic works
     # with commands that provide a --help option with "standard" gnu-like output.)
     for compcom in cp deborphan df feh fetchipac gpasswd head hnb ipacsum mv \
-                   pal stow uname ; do
-        [[ -z ${_comps[$compcom]} ]] && compdef _gnu_generic ${compcom}
-    done; unset compcom
+        pal stow uname ; do
+            [[ -z ${_comps[$compcom]} ]] && compdef _gnu_generic ${compcom}
+        done; unset compcom
 
     # see upgrade function in this file
     compdef _hosts upgrade
@@ -934,32 +936,32 @@ bindkey -e
 ## beginning-of-line OR beginning-of-buffer OR beginning of history
 ## by: Bart Schaefer <schaefer@brasslantern.com>, Bernhard Tittelbach
 function beginning-or-end-of-somewhere () {
-    local hno=$HISTNO
-    if [[ ( "${LBUFFER[-1]}" == $'\n' && "${WIDGET}" == beginning-of* ) || \
-      ( "${RBUFFER[1]}" == $'\n' && "${WIDGET}" == end-of* ) ]]; then
+local hno=$HISTNO
+if [[ ( "${LBUFFER[-1]}" == $'\n' && "${WIDGET}" == beginning-of* ) || \
+    ( "${RBUFFER[1]}" == $'\n' && "${WIDGET}" == end-of* ) ]]; then
+    zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
+else
+    zle .${WIDGET:s/somewhere/line-hist/} "$@"
+    if (( HISTNO != hno )); then
         zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
-    else
-        zle .${WIDGET:s/somewhere/line-hist/} "$@"
-        if (( HISTNO != hno )); then
-            zle .${WIDGET:s/somewhere/buffer-or-history/} "$@"
-        fi
     fi
+fi
 }
 zle -N beginning-of-somewhere beginning-or-end-of-somewhere
 zle -N end-of-somewhere beginning-or-end-of-somewhere
 
 # add a command line to the shells history without executing it
 function commit-to-history () {
-    print -rs ${(z)BUFFER}
-    zle send-break
+print -rs ${(z)BUFFER}
+zle send-break
 }
 zle -N commit-to-history
 
 # only slash should be considered as a word separator:
 function slash-backward-kill-word () {
-    local WORDCHARS="${WORDCHARS:s@/@}"
-    # zle backward-word
-    zle backward-kill-word
+local WORDCHARS="${WORDCHARS:s@/@}"
+# zle backward-word
+zle backward-kill-word
 }
 zle -N slash-backward-kill-word
 
@@ -983,83 +985,83 @@ zle -N slash-backward-kill-word
 zstyle ':acceptline:*' rehash true
 
 function Accept-Line () {
-    setopt localoptions noksharrays
-    local -a subs
-    local -xi aldone
-    local sub
-    local alcontext=${1:-$alcontext}
+setopt localoptions noksharrays
+local -a subs
+local -xi aldone
+local sub
+local alcontext=${1:-$alcontext}
 
-    zstyle -a ":acceptline:${alcontext}" actions subs
+zstyle -a ":acceptline:${alcontext}" actions subs
 
-    (( ${#subs} < 1 )) && return 0
+(( ${#subs} < 1 )) && return 0
 
-    (( aldone = 0 ))
-    for sub in ${subs} ; do
-        [[ ${sub} == 'accept-line' ]] && sub='.accept-line'
-        zle ${sub}
+(( aldone = 0 ))
+for sub in ${subs} ; do
+    [[ ${sub} == 'accept-line' ]] && sub='.accept-line'
+    zle ${sub}
 
-        (( aldone > 0 )) && break
-    done
+    (( aldone > 0 )) && break
+done
 }
 
 function Accept-Line-getdefault () {
-    emulate -L zsh
-    local default_action
+emulate -L zsh
+local default_action
 
-    zstyle -s ":acceptline:${alcontext}" default_action default_action
-    case ${default_action} in
-        ((accept-line|))
-            printf ".accept-line"
-            ;;
-        (*)
-            printf ${default_action}
-            ;;
-    esac
+zstyle -s ":acceptline:${alcontext}" default_action default_action
+case ${default_action} in
+    ((accept-line|))
+        printf ".accept-line"
+        ;;
+    (*)
+        printf ${default_action}
+        ;;
+esac
 }
 
 function Accept-Line-HandleContext () {
-    zle Accept-Line
+zle Accept-Line
 
-    default_action=$(Accept-Line-getdefault)
-    zstyle -T ":acceptline:${alcontext}" call_default \
-        && zle ${default_action}
+default_action=$(Accept-Line-getdefault)
+zstyle -T ":acceptline:${alcontext}" call_default \
+    && zle ${default_action}
 }
 
 function accept-line () {
-    setopt localoptions noksharrays
-    local -a cmdline
-    local -x alcontext
-    local buf com fname format msg default_action
+setopt localoptions noksharrays
+local -a cmdline
+local -x alcontext
+local buf com fname format msg default_action
 
-    alcontext='default'
-    buf="${BUFFER}"
-    cmdline=(${(z)BUFFER})
-    com="${cmdline[1]}"
-    fname="_${com}"
+alcontext='default'
+buf="${BUFFER}"
+cmdline=(${(z)BUFFER})
+com="${cmdline[1]}"
+fname="_${com}"
 
-    Accept-Line 'preprocess'
+Accept-Line 'preprocess'
 
-    zstyle -t ":acceptline:${alcontext}" rehash \
-        && [[ -z ${commands[$com]} ]]           \
-        && rehash
+zstyle -t ":acceptline:${alcontext}" rehash \
+    && [[ -z ${commands[$com]} ]]           \
+    && rehash
 
-    if    [[ -n ${com}               ]] \
-       && [[ -n ${reswords[(r)$com]} ]] \
-       || [[ -n ${aliases[$com]}     ]] \
-       || [[ -n ${functions[$com]}   ]] \
-       || [[ -n ${builtins[$com]}    ]] \
-       || [[ -n ${commands[$com]}    ]] ; then
+if    [[ -n ${com}               ]] \
+    && [[ -n ${reswords[(r)$com]} ]] \
+    || [[ -n ${aliases[$com]}     ]] \
+    || [[ -n ${functions[$com]}   ]] \
+    || [[ -n ${builtins[$com]}    ]] \
+    || [[ -n ${commands[$com]}    ]] ; then
 
         # there is something sensible to execute, just do it.
         alcontext='normal'
         Accept-Line-HandleContext
 
         return
-    fi
+fi
 
-    if    [[ -o correct              ]] \
-       || [[ -o correctall           ]] \
-       && [[ -n ${functions[$fname]} ]] ; then
+if    [[ -o correct              ]] \
+    || [[ -o correctall           ]] \
+    && [[ -n ${functions[$fname]} ]] ; then
 
         # nothing there to execute but there is a function called
         # _command_name; a completion widget. Makes no sense to
@@ -1098,7 +1100,7 @@ function accept-line () {
         Accept-Line-HandleContext
 
         return
-    fi
+fi
 
     # If we got this far, the commandline only contains whitespace, or is empty.
     alcontext='empty'
@@ -1117,8 +1119,8 @@ declare -A abk
 setopt extendedglob
 setopt interactivecomments
 abk=(
-#   key   # value                  (#d additional doc string)
-#A# start
+    #   key   # value                  (#d additional doc string)
+    #A# start
     '...'  '../..'
     '....' '../../..'
     'BG'   '& exit'
@@ -1135,7 +1137,7 @@ abk=(
     'S'    '| sort -u'
     'T'    '| tail'
     'V'    '|& vim -'
-#A# end
+    #A# end
     'co'   './configure && make && sudo make install'
 )
 
@@ -1151,7 +1153,7 @@ function zleiab () {
 zle -N zleiab
 
 function help-show-abk () {
-  zle -M "$(print "Available abbreviations for expansion:"; print -a -C 2 ${(kv)abk})"
+zle -M "$(print "Available abbreviations for expansion:"; print -a -C 2 ${(kv)abk})"
 }
 
 zle -N help-show-abk
@@ -1165,24 +1167,24 @@ function insert-last-typed-word () { zle insert-last-word -- 0 -1 };
 zle -N insert-last-typed-word;
 
 function grml-zsh-fg () {
-  if (( ${#jobstates} )); then
+if (( ${#jobstates} )); then
     zle .push-input
     [[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
     BUFFER="${BUFFER}fg"
     zle .accept-line
-  else
+else
     zle -M 'No background jobs. Doing nothing.'
-  fi
+fi
 }
 zle -N grml-zsh-fg
 
 # run command line as user root via sudo:
 function sudo-command-line () {
-    [[ -z $BUFFER ]] && zle up-history
-    if [[ $BUFFER != sudo\ * ]]; then
-        BUFFER="sudo $BUFFER"
-        CURSOR=$(( CURSOR+5 ))
-    fi
+[[ -z $BUFFER ]] && zle up-history
+if [[ $BUFFER != sudo\ * ]]; then
+    BUFFER="sudo $BUFFER"
+    CURSOR=$(( CURSOR+5 ))
+fi
 }
 zle -N sudo-command-line
 
@@ -1252,7 +1254,7 @@ function help_zle_parse_keybindings () {
         local load_cache=0
         local f
         for f ($HELPZLE_KEYBINDING_FILES) [[ $f -nt $HELP_ZLE_CACHE_FILE ]] && load_cache=1
-        [[ $load_cache -eq 0 ]] && . $HELP_ZLE_CACHE_FILE && return
+            [[ $load_cache -eq 0 ]] && . $HELP_ZLE_CACHE_FILE && return
     fi
 
     #fill with default keybindings, possibly to be overwritten in a file later
@@ -1303,22 +1305,22 @@ function help_zle_parse_keybindings () {
             #zsh pattern: matches lines like: #k# ..............
             if [[ "$cline" == (#s)[[:space:]]#\#k\#[[:space:]]##(#b)(*)[[:space:]]#(#e) ]]; then
                 lastkeybind_desc="$match[*]"
-                num_lines_elapsed=0
-            #zsh pattern: matches lines that set a keybinding using bind2map, bindkey or compdef -k
-            #             ignores lines that are commentend out
-            #             grabs first in '' or "" enclosed string with length between 1 and 6 characters
-            elif [[ "$cline" == [^#]#(bind2maps[[:space:]](*)-s|bindkey|compdef -k)[[:space:]](*)(#b)(\"((?)(#c1,6))\"|\'((?)(#c1,6))\')(#B)(*)  ]]; then
-                #description previously found ? description not more than 2 lines away ? keybinding not empty ?
-                if [[ -n $lastkeybind_desc && $num_lines_elapsed -lt 2 && -n $match[1] ]]; then
-                    #substitute keybinding string with something readable
-                    k=${${${${${${${match[1]/\\e\^h/<Alt><BS>}/\\e\^\?/<Alt><BS>}/\\e\[5~/<PageUp>}/\\e\[6~/<PageDown>}//(\\e|\^\[)/<Alt>}//\^/<Ctrl>}/3~/<Alt><Del>}
-                    #put keybinding in assoc array, possibly overwriting defaults or stuff found in earlier files
-                    #Note that we are extracting the keybinding-string including the quotes (see Note at beginning)
-                    help_zle_keybindings[${k}]=$lastkeybind_desc
-                fi
-                lastkeybind_desc=""
-            else
-              ((num_lines_elapsed++))
+                            num_lines_elapsed=0
+                            #zsh pattern: matches lines that set a keybinding using bind2map, bindkey or compdef -k
+                            #             ignores lines that are commentend out
+                            #             grabs first in '' or "" enclosed string with length between 1 and 6 characters
+                        elif [[ "$cline" == [^#]#(bind2maps[[:space:]](*)-s|bindkey|compdef -k)[[:space:]](*)(#b)(\"((?)(#c1,6))\"|\'((?)(#c1,6))\')(#B)(*)  ]]; then
+                            #description previously found ? description not more than 2 lines away ? keybinding not empty ?
+                            if [[ -n $lastkeybind_desc && $num_lines_elapsed -lt 2 && -n $match[1] ]]; then
+                                #substitute keybinding string with something readable
+                                k=${${${${${${${match[1]/\\e\^h/<Alt><BS>}/\\e\^\?/<Alt><BS>}/\\e\[5~/<PageUp>}/\\e\[6~/<PageDown>}//(\\e|\^\[)/<Alt>}//\^/<Ctrl>}/3~/<Alt><Del>}
+                                #put keybinding in assoc array, possibly overwriting defaults or stuff found in earlier files
+                                #Note that we are extracting the keybinding-string including the quotes (see Note at beginning)
+                                help_zle_keybindings[${k}]=$lastkeybind_desc
+                            fi
+                            lastkeybind_desc=""
+                        else
+                            ((num_lines_elapsed++))
             fi
         done
     done
@@ -1326,32 +1328,32 @@ function help_zle_parse_keybindings () {
     #calculate length of keybinding column
     local kstrlen=0
     for k (${(k)help_zle_keybindings[@]}) ((kstrlen < ${#k})) && kstrlen=${#k}
-    #convert the assoc array into preformated lines, which we are able to sort
-    for k v in ${(kv)help_zle_keybindings[@]}; do
-        #pad keybinding-string to kstrlen chars and remove outermost characters (i.e. the quotes)
-        help_zle_lines+=("${(r:kstrlen:)k[2,-2]}${v}")
-    done
-    #sort lines alphabetically
-    help_zle_lines=("${(i)help_zle_lines[@]}")
-    [[ -d ${HELP_ZLE_CACHE_FILE:h} ]] || mkdir -p "${HELP_ZLE_CACHE_FILE:h}"
-    echo "help_zle_lines=(${(q)help_zle_lines[@]})" >| $HELP_ZLE_CACHE_FILE
-    zcompile $HELP_ZLE_CACHE_FILE
-}
+        #convert the assoc array into preformated lines, which we are able to sort
+        for k v in ${(kv)help_zle_keybindings[@]}; do
+            #pad keybinding-string to kstrlen chars and remove outermost characters (i.e. the quotes)
+            help_zle_lines+=("${(r:kstrlen:)k[2,-2]}${v}")
+        done
+        #sort lines alphabetically
+        help_zle_lines=("${(i)help_zle_lines[@]}")
+        [[ -d ${HELP_ZLE_CACHE_FILE:h} ]] || mkdir -p "${HELP_ZLE_CACHE_FILE:h}"
+        echo "help_zle_lines=(${(q)help_zle_lines[@]})" >| $HELP_ZLE_CACHE_FILE
+        zcompile $HELP_ZLE_CACHE_FILE
+    }
 typeset -g help_zle_sln
 typeset -g -a help_zle_lines
 
 # Provides (partially autogenerated) help on keybindings and the zsh line editor
 function help-zle () {
-    emulate -L zsh
-    unsetopt ksharrays  #indexing starts at 1
-    #help lines already generated ? no ? then do it
-    [[ ${+functions[help_zle_parse_keybindings]} -eq 1 ]] && {help_zle_parse_keybindings && unfunction help_zle_parse_keybindings}
-    #already displayed all lines ? go back to the start
-    [[ $help_zle_sln -gt ${#help_zle_lines} ]] && help_zle_sln=1
-    local sln=$help_zle_sln
-    #note that help_zle_sln is a global var, meaning we remember the last page we viewed
-    help_zle_sln=$((help_zle_sln + HELP_LINES_PER_PAGE))
-    zle -M "${(F)help_zle_lines[sln,help_zle_sln-1]}"
+emulate -L zsh
+unsetopt ksharrays  #indexing starts at 1
+#help lines already generated ? no ? then do it
+[[ ${+functions[help_zle_parse_keybindings]} -eq 1 ]] && {help_zle_parse_keybindings && unfunction help_zle_parse_keybindings}
+#already displayed all lines ? go back to the start
+[[ $help_zle_sln -gt ${#help_zle_lines} ]] && help_zle_sln=1
+local sln=$help_zle_sln
+#note that help_zle_sln is a global var, meaning we remember the last page we viewed
+help_zle_sln=$((help_zle_sln + HELP_LINES_PER_PAGE))
+zle -M "${(F)help_zle_lines[sln,help_zle_sln-1]}"
 }
 zle -N help-zle
 
@@ -1381,9 +1383,9 @@ if check_com -c screen || check_com -c tmux; then
         _screen_display_wordlist[${_screen_display_wordlist[(i)$PREFIX]}]=""
         compadd -a _screen_display_wordlist
     }
-    #m# k CTRL-x\,\,\,S Complete word from GNU screen buffer
-    bindkey -r "^xS"
-    compdef -k _complete_screen_display complete-word '^xS'
+#m# k CTRL-x\,\,\,S Complete word from GNU screen buffer
+bindkey -r "^xS"
+compdef -k _complete_screen_display complete-word '^xS'
 fi
 
 # Load a few more functions and tie them to widgets, so they can be bound:
@@ -1450,21 +1452,21 @@ function bind2maps () {
 
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     function zle-smkx () {
-        emulate -L zsh
-        printf '%s' ${terminfo[smkx]}
-    }
-    function zle-rmkx () {
-        emulate -L zsh
-        printf '%s' ${terminfo[rmkx]}
-    }
-    function zle-line-init () {
-        zle-smkx
-    }
-    function zle-line-finish () {
-        zle-rmkx
-    }
-    zle -N zle-line-init
-    zle -N zle-line-finish
+    emulate -L zsh
+    printf '%s' ${terminfo[smkx]}
+}
+function zle-rmkx () {
+emulate -L zsh
+printf '%s' ${terminfo[rmkx]}
+}
+function zle-line-init () {
+zle-smkx
+}
+function zle-line-finish () {
+zle-rmkx
+}
+zle -N zle-line-init
+zle -N zle-line-finish
 else
     for i in {s,r}mkx; do
         (( ${+terminfo[$i]} )) || grml_missing_features+=($i)
@@ -1475,16 +1477,16 @@ fi
 typeset -A key
 key=(
     Home     "${terminfo[khome]}"
-    End      "${terminfo[kend]}"
-    Insert   "${terminfo[kich1]}"
-    Delete   "${terminfo[kdch1]}"
-    Up       "${terminfo[kcuu1]}"
-    Down     "${terminfo[kcud1]}"
-    Left     "${terminfo[kcub1]}"
-    Right    "${terminfo[kcuf1]}"
-    PageUp   "${terminfo[kpp]}"
-    PageDown "${terminfo[knp]}"
-    BackTab  "${terminfo[kcbt]}"
+End      "${terminfo[kend]}"
+Insert   "${terminfo[kich1]}"
+Delete   "${terminfo[kdch1]}"
+Up       "${terminfo[kcuu1]}"
+Down     "${terminfo[kcud1]}"
+Left     "${terminfo[kcub1]}"
+Right    "${terminfo[kcuf1]}"
+PageUp   "${terminfo[kpp]}"
+PageDown "${terminfo[knp]}"
+BackTab  "${terminfo[kcbt]}"
 )
 
 # Guidelines for adding key bindings:
@@ -1567,11 +1569,11 @@ bind2maps emacs viins       -- -s '^xi' insert-unicode-char
 # use the new *-pattern-* widgets for incremental history search
 if zrcgotwidget history-incremental-pattern-search-backward; then
     for seq wid in '^r' history-incremental-pattern-search-backward \
-                   '^s' history-incremental-pattern-search-forward
-    do
-        bind2maps emacs viins vicmd -- -s $seq $wid
-    done
-    builtin unset -v seq wid
+        '^s' history-incremental-pattern-search-forward
+        do
+            bind2maps emacs viins vicmd -- -s $seq $wid
+        done
+        builtin unset -v seq wid
 fi
 
 if zrcgotkeymap menuselect; then
@@ -1640,13 +1642,13 @@ done; unset rh
 # command not found handling
 
 (( ${COMMAND_NOT_FOUND} == 1 )) &&
-function command_not_found_handler () {
-    emulate -L zsh
-    if [[ -x ${GRML_ZSH_CNF_HANDLER} ]] ; then
-        ${GRML_ZSH_CNF_HANDLER} $1
-    fi
-    return 1
-}
+    function command_not_found_handler () {
+        emulate -L zsh
+        if [[ -x ${GRML_ZSH_CNF_HANDLER} ]] ; then
+            ${GRML_ZSH_CNF_HANDLER} $1
+        fi
+        return 1
+    }
 
 # history
 
@@ -1676,37 +1678,37 @@ if zstyle -T ':grml:chpwd:dirstack' enable; then
         return 1
     }
 
-    function chpwd () {
-        (( ZSH_SUBSHELL )) && return
-        (( $DIRSTACKSIZE <= 0 )) && return
-        [[ -z $DIRSTACKFILE ]] && return
-        grml_dirstack_filter $PWD && return
-        GRML_PERSISTENT_DIRSTACK=(
-            $PWD "${(@)GRML_PERSISTENT_DIRSTACK[1,$DIRSTACKSIZE]}"
-        )
-        builtin print -l ${GRML_PERSISTENT_DIRSTACK} >! ${DIRSTACKFILE}
-    }
+function chpwd () {
+    (( ZSH_SUBSHELL )) && return
+    (( $DIRSTACKSIZE <= 0 )) && return
+    [[ -z $DIRSTACKFILE ]] && return
+    grml_dirstack_filter $PWD && return
+    GRML_PERSISTENT_DIRSTACK=(
+        $PWD "${(@)GRML_PERSISTENT_DIRSTACK[1,$DIRSTACKSIZE]}"
+    )
+    builtin print -l ${GRML_PERSISTENT_DIRSTACK} >! ${DIRSTACKFILE}
+}
 
-    if [[ -f ${DIRSTACKFILE} ]]; then
-        # Enabling NULL_GLOB via (N) weeds out any non-existing
-        # directories from the saved dir-stack file.
-        dirstack=( ${(f)"$(< $DIRSTACKFILE)"}(N) )
-        # "cd -" won't work after login by just setting $OLDPWD, so
-        [[ -d $dirstack[1] ]] && cd -q $dirstack[1] && cd -q $OLDPWD
-    fi
+if [[ -f ${DIRSTACKFILE} ]]; then
+    # Enabling NULL_GLOB via (N) weeds out any non-existing
+    # directories from the saved dir-stack file.
+    dirstack=( ${(f)"$(< $DIRSTACKFILE)"}(N) )
+    # "cd -" won't work after login by just setting $OLDPWD, so
+    [[ -d $dirstack[1] ]] && cd -q $dirstack[1] && cd -q $OLDPWD
+fi
 
-    if zstyle -t ':grml:chpwd:dirstack' filter-on-load; then
-        for i in "${dirstack[@]}"; do
-            if ! grml_dirstack_filter "$i"; then
-                GRML_PERSISTENT_DIRSTACK=(
-                    "${GRML_PERSISTENT_DIRSTACK[@]}"
-                    $i
-                )
-            fi
-        done
-    else
-        GRML_PERSISTENT_DIRSTACK=( "${dirstack[@]}" )
-    fi
+if zstyle -t ':grml:chpwd:dirstack' filter-on-load; then
+    for i in "${dirstack[@]}"; do
+        if ! grml_dirstack_filter "$i"; then
+            GRML_PERSISTENT_DIRSTACK=(
+                "${GRML_PERSISTENT_DIRSTACK[@]}"
+                $i
+            )
+        fi
+    done
+else
+    GRML_PERSISTENT_DIRSTACK=( "${dirstack[@]}" )
+fi
 fi
 
 # directory based profiles
@@ -1803,133 +1805,133 @@ PS4='+%N:%i:%_> '
 # display battery status on right side of prompt using 'GRML_DISPLAY_BATTERY=1' in .zshrc.pre
 
 function battery () {
-if [[ $GRML_DISPLAY_BATTERY -gt 0 ]] ; then
-    if islinux ; then
-        batterylinux
-    elif isopenbsd ; then
-        batteryopenbsd
-    elif isfreebsd ; then
-        batteryfreebsd
-    elif isdarwin ; then
-        batterydarwin
-    else
-        #not yet supported
-        GRML_DISPLAY_BATTERY=0
+    if [[ $GRML_DISPLAY_BATTERY -gt 0 ]] ; then
+        if islinux ; then
+            batterylinux
+        elif isopenbsd ; then
+            batteryopenbsd
+        elif isfreebsd ; then
+            batteryfreebsd
+        elif isdarwin ; then
+            batterydarwin
+        else
+            #not yet supported
+            GRML_DISPLAY_BATTERY=0
+        fi
     fi
-fi
 }
 
 function batterylinux () {
-GRML_BATTERY_LEVEL=''
-local batteries bat capacity
-batteries=( /sys/class/power_supply/BAT*(N) )
-if (( $#batteries > 0 )) ; then
-    for bat in $batteries ; do
-        if [[ -e $bat/capacity ]]; then
-            capacity=$(< $bat/capacity)
-        else
-            typeset -F energy_full=$(< $bat/energy_full)
-            typeset -F energy_now=$(< $bat/energy_now)
-            typeset -i capacity=$(( 100 * $energy_now / $energy_full))
-        fi
-        case $(< $bat/status) in
-        Charging)
-            GRML_BATTERY_LEVEL+=" ^"
-            ;;
-        Discharging)
-            if (( capacity < 20 )) ; then
-                GRML_BATTERY_LEVEL+=" !v"
+    GRML_BATTERY_LEVEL=''
+    local batteries bat capacity
+    batteries=( /sys/class/power_supply/BAT*(N) )
+    if (( $#batteries > 0 )) ; then
+        for bat in $batteries ; do
+            if [[ -e $bat/capacity ]]; then
+                capacity=$(< $bat/capacity)
             else
-                GRML_BATTERY_LEVEL+=" v"
+                typeset -F energy_full=$(< $bat/energy_full)
+                typeset -F energy_now=$(< $bat/energy_now)
+                typeset -i capacity=$(( 100 * $energy_now / $energy_full))
             fi
-            ;;
-        *) # Full, Unknown
-            GRML_BATTERY_LEVEL+=" ="
-            ;;
-        esac
-        GRML_BATTERY_LEVEL+="${capacity}%%"
-    done
-fi
+            case $(< $bat/status) in
+                Charging)
+                    GRML_BATTERY_LEVEL+=" ^"
+                    ;;
+                Discharging)
+                    if (( capacity < 20 )) ; then
+                        GRML_BATTERY_LEVEL+=" !v"
+                    else
+                        GRML_BATTERY_LEVEL+=" v"
+                    fi
+                    ;;
+                *) # Full, Unknown
+                    GRML_BATTERY_LEVEL+=" ="
+                    ;;
+            esac
+            GRML_BATTERY_LEVEL+="${capacity}%%"
+        done
+    fi
 }
 
 function batteryopenbsd () {
-GRML_BATTERY_LEVEL=''
-local bat batfull batwarn batnow num
-for num in 0 1 ; do
-    bat=$(sysctl -n hw.sensors.acpibat${num} 2>/dev/null)
-    if [[ -n $bat ]]; then
-        batfull=${"$(sysctl -n hw.sensors.acpibat${num}.amphour0)"%% *}
-        batwarn=${"$(sysctl -n hw.sensors.acpibat${num}.amphour1)"%% *}
-        batnow=${"$(sysctl -n hw.sensors.acpibat${num}.amphour3)"%% *}
-        case "$(sysctl -n hw.sensors.acpibat${num}.raw0)" in
-            *" discharging"*)
-                if (( batnow < batwarn )) ; then
-                    GRML_BATTERY_LEVEL+=" !v"
-                else
-                    GRML_BATTERY_LEVEL+=" v"
-                fi
-                ;;
-            *" charging"*)
-                GRML_BATTERY_LEVEL+=" ^"
-                ;;
-            *)
-                GRML_BATTERY_LEVEL+=" ="
-                ;;
-        esac
-        GRML_BATTERY_LEVEL+="${$(( 100 * batnow / batfull ))%%.*}%%"
-    fi
-done
+    GRML_BATTERY_LEVEL=''
+    local bat batfull batwarn batnow num
+    for num in 0 1 ; do
+        bat=$(sysctl -n hw.sensors.acpibat${num} 2>/dev/null)
+        if [[ -n $bat ]]; then
+            batfull=${"$(sysctl -n hw.sensors.acpibat${num}.amphour0)"%% *}
+            batwarn=${"$(sysctl -n hw.sensors.acpibat${num}.amphour1)"%% *}
+            batnow=${"$(sysctl -n hw.sensors.acpibat${num}.amphour3)"%% *}
+            case "$(sysctl -n hw.sensors.acpibat${num}.raw0)" in
+                *" discharging"*)
+                    if (( batnow < batwarn )) ; then
+                        GRML_BATTERY_LEVEL+=" !v"
+                    else
+                        GRML_BATTERY_LEVEL+=" v"
+                    fi
+                    ;;
+                *" charging"*)
+                    GRML_BATTERY_LEVEL+=" ^"
+                    ;;
+                *)
+                    GRML_BATTERY_LEVEL+=" ="
+                    ;;
+            esac
+            GRML_BATTERY_LEVEL+="${$(( 100 * batnow / batfull ))%%.*}%%"
+        fi
+    done
 }
 
 function batteryfreebsd () {
-GRML_BATTERY_LEVEL=''
-local num
-local -A table
-for num in 0 1 ; do
-    table=( ${=${${${${${(M)${(f)"$(acpiconf -i $num 2>&1)"}:#(State|Remaining capacity):*}%%( ##|%)}//:[ $'\t']##/@}// /-}//@/ }} )
-    if [[ -n $table ]] && [[ $table[State] != "not-present" ]] ; then
-        case $table[State] in
-            *discharging*)
-                if (( $table[Remaining-capacity] < 20 )) ; then
+    GRML_BATTERY_LEVEL=''
+    local num
+    local -A table
+    for num in 0 1 ; do
+        table=( ${=${${${${${(M)${(f)"$(acpiconf -i $num 2>&1)"}:#(State|Remaining capacity):*}%%( ##|%)}//:[ $'\t']##/@}// /-}//@/ }} )
+        if [[ -n $table ]] && [[ $table[State] != "not-present" ]] ; then
+            case $table[State] in
+                *discharging*)
+                    if (( $table[Remaining-capacity] < 20 )) ; then
+                        GRML_BATTERY_LEVEL+=" !v"
+                    else
+                        GRML_BATTERY_LEVEL+=" v"
+                    fi
+                    ;;
+                *charging*)
+                    GRML_BATTERY_LEVEL+=" ^"
+                    ;;
+                *)
+                    GRML_BATTERY_LEVEL+=" ="
+                    ;;
+            esac
+            GRML_BATTERY_LEVEL+="$table[Remaining-capacity]%%"
+        fi
+    done
+}
+
+function batterydarwin () {
+    GRML_BATTERY_LEVEL=''
+    local -a table
+    table=( ${$(pmset -g ps)[(w)8,9]%%(\%|);} )
+    if [[ -n $table[2] ]] ; then
+        case $table[2] in
+            charging)
+                GRML_BATTERY_LEVEL+=" ^"
+                ;;
+            discharging)
+                if (( $table[1] < 20 )) ; then
                     GRML_BATTERY_LEVEL+=" !v"
                 else
                     GRML_BATTERY_LEVEL+=" v"
                 fi
                 ;;
-            *charging*)
-                GRML_BATTERY_LEVEL+=" ^"
-                ;;
             *)
                 GRML_BATTERY_LEVEL+=" ="
                 ;;
         esac
-        GRML_BATTERY_LEVEL+="$table[Remaining-capacity]%%"
+        GRML_BATTERY_LEVEL+="$table[1]%%"
     fi
-done
-}
-
-function batterydarwin () {
-GRML_BATTERY_LEVEL=''
-local -a table
-table=( ${$(pmset -g ps)[(w)8,9]%%(\%|);} )
-if [[ -n $table[2] ]] ; then
-    case $table[2] in
-        charging)
-            GRML_BATTERY_LEVEL+=" ^"
-            ;;
-        discharging)
-            if (( $table[1] < 20 )) ; then
-                GRML_BATTERY_LEVEL+=" !v"
-            else
-                GRML_BATTERY_LEVEL+=" v"
-            fi
-            ;;
-        *)
-            GRML_BATTERY_LEVEL+=" ="
-            ;;
-    esac
-    GRML_BATTERY_LEVEL+="$table[1]%%"
-fi
 }
 
 # set variable debian_chroot if running in a chroot with /etc/debian_chroot
@@ -2028,23 +2030,23 @@ fi
 
 function prompt_grml_help () {
     <<__EOF0__
-  prompt grml
+    prompt grml
 
     This is the prompt as used by the grml-live system <http://grml.org>. It is
     a rather simple one-line prompt, that by default looks something like this:
 
-        <user>@<host> <current-working-directory>[ <vcs_info-data>]%
+    <user>@<host> <current-working-directory>[ <vcs_info-data>]%
 
     The prompt itself integrates with zsh's prompt themes system (as you are
     witnessing right now) and is configurable to a certain degree. In
     particular, these aspects are customisable:
 
-        - The items used in the prompt (e.g. you can remove \`user' from
-          the list of activated items, which will cause the user name to
-          be omitted from the prompt string).
+    - The items used in the prompt (e.g. you can remove \`user' from
+    the list of activated items, which will cause the user name to
+    be omitted from the prompt string).
 
-        - The attributes used with the items are customisable via strings
-          used before and after the actual item.
+    - The attributes used with the items are customisable via strings
+    used before and after the actual item.
 
     The available items are: at, battery, change-root, date, grml-chroot,
     history, host, jobs, newline, path, percent, rc, rc-always, sad-smiley,
@@ -2053,7 +2055,7 @@ function prompt_grml_help () {
     The actual configuration is done via zsh's \`zstyle' mechanism. The
     context, that is used while looking up styles is:
 
-        ':prompt:grml:<left-or-right>:<subcontext>'
+    ':prompt:grml:<left-or-right>:<subcontext>'
 
     Here <left-or-right> is either \`left' or \`right', signifying whether the
     style should affect the left or the right prompt. <subcontext> is either
@@ -2061,34 +2063,34 @@ function prompt_grml_help () {
 
     The styles:
 
-        - use-rprompt (boolean): If \`true' (the default), print a sad smiley
-          in $RPROMPT if the last command a returned non-successful error code.
-          (This in only valid if <left-or-right> is "right"; ignored otherwise)
+    - use-rprompt (boolean): If \`true' (the default), print a sad smiley
+    in $RPROMPT if the last command a returned non-successful error code.
+    (This in only valid if <left-or-right> is "right"; ignored otherwise)
 
-        - items (list): The list of items used in the prompt. If \`vcs' is
-          present in the list, the theme's code invokes \`vcs_info'
-          accordingly. Default (left): rc change-root user at host path vcs
-          percent; Default (right): sad-smiley
+    - items (list): The list of items used in the prompt. If \`vcs' is
+    present in the list, the theme's code invokes \`vcs_info'
+    accordingly. Default (left): rc change-root user at host path vcs
+    percent; Default (right): sad-smiley
 
-        - strip-sensitive-characters (boolean): If the \`prompt_subst' option
-          is active in zsh, the shell performs lots of expansions on prompt
-          variable strings, including command substitution. So if you don't
-          control where some of your prompt strings is coming from, this is
-          an exploitable weakness. Grml's zsh setup does not set this option
-          and it is off in the shell in zsh-mode by default. If it *is* turned
-          on however, this style becomes active, and there are two flavours of
-          it: On per default is a global variant in the '*:setup' context. This
-          strips characters after the whole prompt string was constructed. There
-          is a second variant in the '*:items:<item>', that is off by default.
-          It allows fine grained control over which items' data is stripped.
-          The characters that are stripped are: \$ and \`.
+    - strip-sensitive-characters (boolean): If the \`prompt_subst' option
+    is active in zsh, the shell performs lots of expansions on prompt
+    variable strings, including command substitution. So if you don't
+    control where some of your prompt strings is coming from, this is
+    an exploitable weakness. Grml's zsh setup does not set this option
+    and it is off in the shell in zsh-mode by default. If it *is* turned
+    on however, this style becomes active, and there are two flavours of
+    it: On per default is a global variant in the '*:setup' context. This
+    strips characters after the whole prompt string was constructed. There
+    is a second variant in the '*:items:<item>', that is off by default.
+    It allows fine grained control over which items' data is stripped.
+    The characters that are stripped are: \$ and \`.
 
     Available styles in 'items:<item>' are: pre, post. These are strings that
     are inserted before (pre) and after (post) the item in question. Thus, the
     following would cause the user name to be printed in red instead of the
     default blue:
 
-        zstyle ':prompt:grml:*:items:user' pre '%F{red}'
+    zstyle ':prompt:grml:*:items:user' pre '%F{red}'
 
     Note, that the \`post' style may remain at its default value, because its
     default value is '%f', which turns the foreground text attribute off (which
@@ -2097,33 +2099,33 @@ __EOF0__
 }
 
 function prompt_grml-chroot_help () {
-    <<__EOF0__
-  prompt grml-chroot
+<<__EOF0__
+prompt grml-chroot
 
-    This is a variation of the grml prompt, see: prompt -h grml
+This is a variation of the grml prompt, see: prompt -h grml
 
-    The main difference is the default value of the \`items' style. The rest
-    behaves exactly the same. Here are the defaults for \`grml-chroot':
+The main difference is the default value of the \`items' style. The rest
+behaves exactly the same. Here are the defaults for \`grml-chroot':
 
-        - left: grml-chroot user at host path percent
-        - right: (empty list)
+- left: grml-chroot user at host path percent
+- right: (empty list)
 __EOF0__
 }
 
 function prompt_grml-large_help () {
-    <<__EOF0__
-  prompt grml-large
+<<__EOF0__
+prompt grml-large
 
-    This is a variation of the grml prompt, see: prompt -h grml
+This is a variation of the grml prompt, see: prompt -h grml
 
-    The main difference is the default value of the \`items' style. In
-    particular, this theme uses _two_ lines instead of one with the plain
-    \`grml' theme. The rest behaves exactly the same. Here are the defaults
-    for \`grml-large':
+The main difference is the default value of the \`items' style. In
+particular, this theme uses _two_ lines instead of one with the plain
+\`grml' theme. The rest behaves exactly the same. Here are the defaults
+for \`grml-large':
 
-        - left: rc jobs history shell-level change-root time date newline user
-                at host path vcs percent
-        - right: sad-smiley
+    - left: rc jobs history shell-level change-root time date newline user
+    at host path vcs percent
+    - right: sad-smiley
 __EOF0__
 }
 
@@ -2142,20 +2144,20 @@ function prompt_grml_setup () {
 }
 
 function prompt_grml-chroot_setup () {
-    grml_prompt_setup grml-chroot
+grml_prompt_setup grml-chroot
 }
 
 function prompt_grml-large_setup () {
-    grml_prompt_setup grml-large
+grml_prompt_setup grml-large
 }
 
 # These maps define default tokens and pre-/post-decoration for items to be
 # used within the themes. All defaults may be customised in a context sensitive
 # matter by using zsh's `zstyle' mechanism.
 typeset -gA grml_prompt_pre_default \
-            grml_prompt_post_default \
-            grml_prompt_token_default \
-            grml_prompt_token_function
+    grml_prompt_post_default \
+    grml_prompt_token_default \
+    grml_prompt_token_function
 
 grml_prompt_pre_default=(
     at                ''
@@ -2230,20 +2232,20 @@ function grml_theme_has_token () {
 
 function GRML_theme_add_token_usage () {
     <<__EOF0__
-  Usage: grml_theme_add_token <name> [-f|-i] <token/function> [<pre> <post>]
+    Usage: grml_theme_add_token <name> [-f|-i] <token/function> [<pre> <post>]
 
     <name> is the name for the newly added token. If the \`-f' or \`-i' options
     are used, <token/function> is the name of the function (see below for
     details). Otherwise it is the literal token string to be used. <pre> and
     <post> are optional.
 
-  Options:
+    Options:
 
     -f <function>   Use a function named \`<function>' each time the token
-                    is to be expanded.
+    is to be expanded.
 
     -i <function>   Use a function named \`<function>' to initialise the
-                    value of the token _once_ at runtime.
+    value of the token _once_ at runtime.
 
     The functions are called with one argument: the token's new name. The
     return value is expected in the \$REPLY parameter. The use of these
@@ -2252,21 +2254,21 @@ function GRML_theme_add_token_usage () {
     There is a utility function \`grml_theme_has_token', which you can use
     to test if a token exists before trying to add it. This can be a guard
     for situations in which a \`grml_theme_add_token' call may happen more
-    than once.
+        than once.
 
-  Example:
+        Example:
 
-    To add a new token \`day' that expands to the current weekday in the
-    current locale in green foreground colour, use this:
+        To add a new token \`day' that expands to the current weekday in the
+        current locale in green foreground colour, use this:
 
-      grml_theme_add_token day '%D{%A}' '%F{green}' '%f'
+        grml_theme_add_token day '%D{%A}' '%F{green}' '%f'
 
-    Another example would be support for \$VIRTUAL_ENV:
+        Another example would be support for \$VIRTUAL_ENV:
 
-      function virtual_env_prompt () {
-        REPLY=\${VIRTUAL_ENV+\${VIRTUAL_ENV:t} }
-      }
-      grml_theme_add_token virtual-env -f virtual_env_prompt
+        function virtual_env_prompt () {
+            REPLY=\${VIRTUAL_ENV+\${VIRTUAL_ENV:t} }
+        }
+    grml_theme_add_token virtual-env -f virtual_env_prompt
 
     After that, you will be able to use a changed \`items' style to
     assemble your prompt.
@@ -2299,7 +2301,7 @@ function grml_theme_add_token () {
 
     if (( ARGC == 0 )); then
         printf '
-grml_theme_add_token: No token-string/function-name provided!\n\n'
+        grml_theme_add_token: No token-string/function-name provided!\n\n'
         GRML_theme_add_token_usage
         return 1
     fi
@@ -2307,7 +2309,7 @@ grml_theme_add_token: No token-string/function-name provided!\n\n'
     shift
     if (( ARGC != 0 && ARGC != 2 )); then
         printf '
-grml_theme_add_token: <pre> and <post> need to by specified _both_!\n\n'
+        grml_theme_add_token: <pre> and <post> need to by specified _both_!\n\n'
         GRML_theme_add_token_usage
         return 1
     fi
@@ -2319,7 +2321,7 @@ grml_theme_add_token: <pre> and <post> need to by specified _both_!\n\n'
 
     if grml_theme_has_token $name; then
         printf '
-grml_theme_add_token: Token `%s'\'' exists! Giving up!\n\n' $name
+        grml_theme_add_token: Token `%s'\'' exists! Giving up!\n\n' $name
         GRML_theme_add_token_usage
         return 2
     fi
@@ -2365,61 +2367,61 @@ function grml_prompt_addto () {
     for it in "${items[@]}"; do
         zstyle -s ":prompt:${grmltheme}:${lr}:items:$it" pre apre \
             || apre=${grml_prompt_pre_default[$it]}
-        zstyle -s ":prompt:${grmltheme}:${lr}:items:$it" post apost \
-            || apost=${grml_prompt_post_default[$it]}
-        zstyle -s ":prompt:${grmltheme}:${lr}:items:$it" token new \
-            || new=${grml_prompt_token_default[$it]}
-        if (( ${+grml_prompt_token_function[$it]} )); then
-            REPLY=''
-            ${grml_prompt_token_function[$it]} $it
-        else
-            case $it in
-            battery)
-                grml_wrap_reply $target $new '' ''
-                ;;
-            change-root)
-                grml_wrap_reply $target $new '(' ')'
-                ;;
-            grml-chroot)
-                if [[ -n ${(P)new} ]]; then
-                    REPLY="$CHROOT"
-                else
-                    REPLY=''
-                fi
-                ;;
-            vcs)
-                v="vcs_info_msg_${new}_"
-                if (( ! vcscalled )); then
-                    vcs_info
-                    vcscalled=1
-                fi
-                if (( ${+parameters[$v]} )) && [[ -n "${(P)v}" ]]; then
-                    REPLY="${(P)v}"
-                else
-                    REPLY=''
-                fi
-                ;;
-            *) REPLY="$new" ;;
-            esac
-        fi
-        # Strip volatile characters per item. This is off by default. See the
-        # global stripping code a few lines below for details.
-        if [[ -o prompt_subst ]] && zstyle -t ":prompt:${grmltheme}:${lr}:items:$it" \
-                                           strip-sensitive-characters
-        then
-            REPLY="${REPLY//[$\`]/}"
-        fi
-        typeset -g "${target}=${(P)target}${apre}${REPLY}${apost}"
-    done
+                    zstyle -s ":prompt:${grmltheme}:${lr}:items:$it" post apost \
+                        || apost=${grml_prompt_post_default[$it]}
+                                            zstyle -s ":prompt:${grmltheme}:${lr}:items:$it" token new \
+                                                || new=${grml_prompt_token_default[$it]}
+                                                                                            if (( ${+grml_prompt_token_function[$it]} )); then
+                                                                                                REPLY=''
+                                                                                                ${grml_prompt_token_function[$it]} $it
+                                                                                            else
+                                                                                                case $it in
+                                                                                                    battery)
+                                                                                                        grml_wrap_reply $target $new '' ''
+                                                                                                        ;;
+                                                                                                    change-root)
+                                                                                                        grml_wrap_reply $target $new '(' ')'
+                                                                                                        ;;
+                                                                                                    grml-chroot)
+                                                                                                        if [[ -n ${(P)new} ]]; then
+                                                                                                            REPLY="$CHROOT"
+                                                                                                        else
+                                                                                                            REPLY=''
+                                                                                                        fi
+                                                                                                        ;;
+                                                                                                    vcs)
+                                                                                                        v="vcs_info_msg_${new}_"
+                                                                                                        if (( ! vcscalled )); then
+                                                                                                            vcs_info
+                                                                                                            vcscalled=1
+                                                                                                        fi
+                                                                                                        if (( ${+parameters[$v]} )) && [[ -n "${(P)v}" ]]; then
+                                                                                                            REPLY="${(P)v}"
+                                                                                                        else
+                                                                                                            REPLY=''
+                                                                                                        fi
+                                                                                                        ;;
+                                                                                                    *) REPLY="$new" ;;
+                                                                                                esac
+                                                                                            fi
+                                                                                            # Strip volatile characters per item. This is off by default. See the
+                                                                                            # global stripping code a few lines below for details.
+                                                                                            if [[ -o prompt_subst ]] && zstyle -t ":prompt:${grmltheme}:${lr}:items:$it" \
+                                                                                                strip-sensitive-characters
+                                                                                                                                                                                        then
+                                                                                                                                                                                            REPLY="${REPLY//[$\`]/}"
+                                                                                            fi
+                                                                                            typeset -g "${target}=${(P)target}${apre}${REPLY}${apost}"
+                                                                                        done
 
     # Per default, strip volatile characters (in the prompt_subst case)
     # globally. If the option is off, the style has no effect. For more
     # control, this can be turned off and stripping can be configured on a
     # per-item basis (see above).
     if [[ -o prompt_subst ]] && zstyle -T ":prompt:${grmltheme}:${lr}:setup" \
-                                       strip-sensitive-characters
-    then
-        typeset -g "${target}=${${(P)target}//[$\`]/}"
+        strip-sensitive-characters
+        then
+            typeset -g "${target}=${${(P)target}//[$\`]/}"
     fi
 }
 
@@ -2434,21 +2436,21 @@ function prompt_grml_precmd () {
 }
 
 function prompt_grml-chroot_precmd () {
-    emulate -L zsh
-    local grmltheme=grml-chroot
-    local -a left_items right_items
-    left_items=(grml-chroot user at host path percent)
-    right_items=()
+emulate -L zsh
+local grmltheme=grml-chroot
+local -a left_items right_items
+left_items=(grml-chroot user at host path percent)
+right_items=()
 
-    prompt_grml_precmd_worker
+prompt_grml_precmd_worker
 }
 
 function prompt_grml-large_precmd () {
-    emulate -L zsh
-    local grmltheme=grml-large
-    local -a left_items right_items
-    left_items=(rc jobs history shell-level change-root time date newline
-                user at host path vcs percent)
+emulate -L zsh
+local grmltheme=grml-large
+local -a left_items right_items
+left_items=(rc jobs history shell-level change-root time date newline
+    user at host path vcs percent)
     right_items=(sad-smiley)
 
     prompt_grml_precmd_worker
@@ -2572,7 +2574,7 @@ function grml_maintain_name () {
 
     # set hostname if not running on local machine
     if [[ -n "$HOSTNAME" ]] && [[ "$HOSTNAME" != "${localname}" ]] ; then
-       NAME="@$HOSTNAME"
+        NAME="@$HOSTNAME"
     fi
 }
 
@@ -2693,23 +2695,23 @@ function iso2utf () {
 
 # especially for roadwarriors using GNU screen and ssh:
 if ! check_com asc &>/dev/null ; then
-  function asc () { autossh -t "$@" 'screen -RdU' }
-  compdef asc=ssh
+    function asc () { autossh -t "$@" 'screen -RdU' }
+    compdef asc=ssh
 fi
 
 #f1# Hints for the use of zsh on grml
 function zsh-help () {
-    print "$bg[white]$fg[black]
+print "$bg[white]$fg[black]
 zsh-help - hints for use of zsh on grml
 =======================================$reset_color"
 
-    print '
+print '
 Main configuration of zsh happens in /etc/zsh/zshrc.
 That file is part of the package grml-etc-core, if you want to
 use them on a non-grml-system just get the tar.gz from
 http://deb.grml.org/ or (preferably) get it from the git repository:
 
-  http://git.grml.org/f/grml-etc-core/etc/zsh/zshrc
+http://git.grml.org/f/grml-etc-core/etc/zsh/zshrc
 
 This version of grml'\''s zsh setup does not use skel/.zshrc anymore.
 The file is still there, but it is empty for backwards compatibility.
@@ -2718,52 +2720,52 @@ For your own changes use these two files:
     $HOME/.zshrc.pre
     $HOME/.zshrc.local
 
-The former is sourced very early in our zshrc, the latter is sourced
-very lately.
+    The former is sourced very early in our zshrc, the latter is sourced
+    very lately.
 
-System wide configuration without touching configuration files of grml
-can take place in /etc/zsh/zshrc.local.
+    System wide configuration without touching configuration files of grml
+    can take place in /etc/zsh/zshrc.local.
 
-For information regarding zsh start at http://grml.org/zsh/
+    For information regarding zsh start at http://grml.org/zsh/
 
-Take a look at grml'\''s zsh refcard:
-% xpdf =(zcat /usr/share/doc/grml-docs/zsh/grml-zsh-refcard.pdf.gz)
+        Take a look at grml'\''s zsh refcard:
+        % xpdf =(zcat /usr/share/doc/grml-docs/zsh/grml-zsh-refcard.pdf.gz)
 
-Check out the main zsh refcard:
-% '$BROWSER' http://www.bash2zsh.com/zsh_refcard/refcard.pdf
+        Check out the main zsh refcard:
+        % '$BROWSER' http://www.bash2zsh.com/zsh_refcard/refcard.pdf
 
-And of course visit the zsh-lovers:
-% man zsh-lovers
+        And of course visit the zsh-lovers:
+        % man zsh-lovers
 
-You can adjust some options through environment variables when
-invoking zsh without having to edit configuration files.
-Basically meant for bash users who are not used to the power of
-the zsh yet. :)
+        You can adjust some options through environment variables when
+        invoking zsh without having to edit configuration files.
+        Basically meant for bash users who are not used to the power of
+        the zsh yet. :)
 
-  "NOCOR=1    zsh" => deactivate automatic correction
-  "NOMENU=1   zsh" => do not use auto menu completion
-                      (note: use ctrl-d for completion instead!)
-  "NOPRECMD=1 zsh" => disable the precmd + preexec commands (set GNU screen title)
-  "NOTITLE=1  zsh" => disable setting the title of xterms without disabling
-                      preexec() and precmd() completely
-  "GRML_DISPLAY_BATTERY=1  zsh"
-                   => activate battery status on right side of prompt (WIP)
-  "COMMAND_NOT_FOUND=1 zsh"
-                   => Enable a handler if an external command was not found
-                      The command called in the handler can be altered by setting
-                      the GRML_ZSH_CNF_HANDLER variable, the default is:
-                      "/usr/share/command-not-found/command-not-found"
+        "NOCOR=1    zsh" => deactivate automatic correction
+        "NOMENU=1   zsh" => do not use auto menu completion
+        (note: use ctrl-d for completion instead!)
+        "NOPRECMD=1 zsh" => disable the precmd + preexec commands (set GNU screen title)
+        "NOTITLE=1  zsh" => disable setting the title of xterms without disabling
+        preexec() and precmd() completely
+        "GRML_DISPLAY_BATTERY=1  zsh"
+        => activate battery status on right side of prompt (WIP)
+        "COMMAND_NOT_FOUND=1 zsh"
+        => Enable a handler if an external command was not found
+        The command called in the handler can be altered by setting
+        the GRML_ZSH_CNF_HANDLER variable, the default is:
+        "/usr/share/command-not-found/command-not-found"
 
-A value greater than 0 is enables a feature; a value equal to zero
-disables it. If you like one or the other of these settings, you can
-add them to ~/.zshrc.pre to ensure they are set when sourcing grml'\''s
-zshrc.'
+        A value greater than 0 is enables a feature; a value equal to zero
+        disables it. If you like one or the other of these settings, you can
+        add them to ~/.zshrc.pre to ensure they are set when sourcing grml'\''s
+        zshrc.'
 
-    print "
-$bg[white]$fg[black]
-Please report wishes + bugs to the grml-team: http://grml.org/bugs/
-Enjoy your grml system with the zsh!$reset_color"
-}
+        print "
+        $bg[white]$fg[black]
+        Please report wishes + bugs to the grml-team: http://grml.org/bugs/
+        Enjoy your grml system with the zsh!$reset_color"
+    }
 
 # debian stuff
 if [[ -r /etc/debian_version ]] ; then
@@ -2771,25 +2773,25 @@ if [[ -r /etc/debian_version ]] ; then
         #a3# Execute \kbd{apt-cache policy}
         alias acp='apt-cache policy'
         if check_com -c apt ; then
-          #a3# Execute \kbd{apt search}
-          alias acs='apt search'
-          #a3# Execute \kbd{apt show}
-          alias acsh='apt show'
-          #a3# Execute \kbd{apt dist-upgrade}
-          salias adg="apt dist-upgrade"
-          #a3# Execute \kbd{apt upgrade}
-          salias ag="apt upgrade"
-          #a3# Execute \kbd{apt install}
-          salias agi="apt install"
-          #a3# Execute \kbd{apt update}
-          salias au="apt update"
+            #a3# Execute \kbd{apt search}
+            alias acs='apt search'
+            #a3# Execute \kbd{apt show}
+            alias acsh='apt show'
+            #a3# Execute \kbd{apt dist-upgrade}
+            salias adg="apt dist-upgrade"
+            #a3# Execute \kbd{apt upgrade}
+            salias ag="apt upgrade"
+            #a3# Execute \kbd{apt install}
+            salias agi="apt install"
+            #a3# Execute \kbd{apt update}
+            salias au="apt update"
         else
-          alias acs='apt-cache search'
-          alias acsh='apt-cache show'
-          salias adg="apt-get dist-upgrade"
-          salias ag="apt-get upgrade"
-          salias agi="apt-get install"
-          salias au="apt-get update"
+            alias acs='apt-cache search'
+            alias acsh='apt-cache show'
+            salias adg="apt-get dist-upgrade"
+            salias ag="apt-get upgrade"
+            salias agi="apt-get install"
+            salias au="apt-get update"
         fi
         #a3# Execute \kbd{aptitude install}
         salias ati="aptitude install"
@@ -2803,20 +2805,20 @@ if [[ -r /etc/debian_version ]] ; then
 
     # get a root shell as normal user in live-cd mode:
     if isgrmlcd && [[ $UID -ne 0 ]] ; then
-       alias su="sudo su"
+        alias su="sudo su"
     fi
 
 fi
 
 # use /var/log/syslog iff present, fallback to journalctl otherwise
 if [ -e /var/log/syslog ] ; then
-  #a1# Take a look at the syslog: \kbd{\$PAGER /var/log/syslog || journalctl}
-  salias llog="$PAGER /var/log/syslog"     # take a look at the syslog
-  #a1# Take a look at the syslog: \kbd{tail -f /var/log/syslog || journalctl}
-  salias tlog="tail -f /var/log/syslog"    # follow the syslog
+    #a1# Take a look at the syslog: \kbd{\$PAGER /var/log/syslog || journalctl}
+    salias llog="$PAGER /var/log/syslog"     # take a look at the syslog
+    #a1# Take a look at the syslog: \kbd{tail -f /var/log/syslog || journalctl}
+    salias tlog="tail -f /var/log/syslog"    # follow the syslog
 elif check_com -c journalctl ; then
-  salias llog="journalctl"
-  salias tlog="journalctl -f"
+    salias llog="journalctl"
+    salias tlog="journalctl -f"
 fi
 
 # sort installed Debian-packages by size
@@ -2830,13 +2832,13 @@ if [[ -L /usr/bin/cdrecord ]] || ! check_com -c cdrecord; then
     if check_com -c wodim; then
         function cdrecord () {
             <<__EOF0__
-cdrecord is not provided under its original name by Debian anymore.
-See #377109 in the BTS of Debian for more details.
+            cdrecord is not provided under its original name by Debian anymore.
+            See #377109 in the BTS of Debian for more details.
 
-Please use the wodim binary instead
+            Please use the wodim binary instead
 __EOF0__
-            return 1
-        }
+return 1
+}
     fi
 fi
 
@@ -2847,13 +2849,13 @@ fi
 
 # grmlstuff
 function grmlstuff () {
-# people should use 'grml-x'!
+    # people should use 'grml-x'!
     if check_com -c 915resolution; then
         function 855resolution () {
             echo "Please use 915resolution as resolution modifying tool for Intel \
-graphic chipset."
-            return -1
-        }
+                graphic chipset."
+                            return -1
+                        }
     fi
 
     #a1# Output version of running grml
@@ -2868,13 +2870,13 @@ graphic chipset."
 
     if check_com -c tmate && check_com -c qrencode ; then
         function grml-remote-support() {
-            tmate -L grml-remote-support new -s grml-remote-support -d
-            tmate -L grml-remote-support wait tmate-ready
-            tmate -L grml-remote-support display -p '#{tmate_ssh}' | qrencode -t ANSI
-            echo "tmate session: $(tmate -L grml-remote-support display -p '#{tmate_ssh}')"
-            echo
-            echo "Scan this QR code and send it to your support team."
-        }
+        tmate -L grml-remote-support new -s grml-remote-support -d
+        tmate -L grml-remote-support wait tmate-ready
+        tmate -L grml-remote-support display -p '#{tmate_ssh}' | qrencode -t ANSI
+        echo "tmate session: $(tmate -L grml-remote-support display -p '#{tmate_ssh}')"
+        echo
+        echo "Scan this QR code and send it to your support team."
+    }
     fi
 }
 
@@ -2894,10 +2896,10 @@ is4 && xsource "/etc/zsh/keephack"
 # You can also specify the reference file inline; note quotes:
 # $ ls -l *(e:'nt ~/.zshenv':)
 is4 && function nt () {
-    if [[ -n $1 ]] ; then
-        local NTREF=${~1}
-    fi
-    [[ $REPLY -nt $NTREF ]]
+if [[ -n $1 ]] ; then
+    local NTREF=${~1}
+fi
+[[ $REPLY -nt $NTREF ]]
 }
 
 # shell functions
@@ -3013,13 +3015,13 @@ if check_com -c $PAGER ; then
         local viewer
 
         if [[ ${$(typeset -p PAGER)[2]} = -a ]] ; then
-          viewer=($PAGER)    # support PAGER=(less -Mr) but leave array untouched
-        else
-          viewer=(${=PAGER}) # support PAGER='less -Mr'
+            viewer=($PAGER)    # support PAGER=(less -Mr) but leave array untouched
+            else
+                viewer=(${=PAGER}) # support PAGER='less -Mr'
         fi
 
         if [[ ${viewer[1]:t} = less ]] && [[ -z "${LESSOPEN}" ]] && check_com vi ; then
-          viewer='vi'
+            viewer='vi'
         fi
 
         for package in "$@" ; do
@@ -3042,8 +3044,8 @@ if check_com -c $PAGER ; then
             fi
         done
     }
-    function _dchange () { _files -W /usr/share/doc -/ }
-    compdef _dchange dchange
+function _dchange () { _files -W /usr/share/doc -/ }
+compdef _dchange dchange
 
     #f3# View Debian's NEWS of a given package
     function dnews () {
@@ -3059,8 +3061,8 @@ if check_com -c $PAGER ; then
             fi
         fi
     }
-    function _dnews () { _files -W /usr/share/doc -/ }
-    compdef _dnews dnews
+function _dnews () { _files -W /usr/share/doc -/ }
+compdef _dnews dnews
 
     #f3# View Debian's copyright of a given package
     function dcopyright () {
@@ -3072,8 +3074,8 @@ if check_com -c $PAGER ; then
             return 1
         fi
     }
-    function _dcopyright () { _files -W /usr/share/doc -/ }
-    compdef _dcopyright dcopyright
+function _dcopyright () { _files -W /usr/share/doc -/ }
+compdef _dcopyright dcopyright
 
     #f3# View upstream's changelog of a given package
     function uchange () {
@@ -3085,8 +3087,8 @@ if check_com -c $PAGER ; then
             return 1
         fi
     }
-    function _uchange () { _files -W /usr/share/doc -/ }
-    compdef _uchange uchange
+function _uchange () { _files -W /usr/share/doc -/ }
+compdef _uchange uchange
 fi
 
 # zsh profiling
@@ -3124,75 +3126,75 @@ if [[ -d /etc/init.d || -d /etc/service ]] ; then
             # runit
             case "${action_}" in
                 start) if [[ ! -e /etc/service/$service_ ]]; then
-                           $SUDO ln -s "/etc/sv/$service_" "/etc/service/"
-                       else
-                           $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
-                       fi ;;
-                # there is no reload in runits sysv emulation
-                reload) $SUDO "/etc/init.d/$service_" "force-reload" "$param_" ;;
-                *) $SUDO "/etc/init.d/$service_" "${action_}" "$param_" ;;
-            esac
-        else
-            # sysv/sysvinit-utils, upstart
-            if check_com -c service ; then
-              $SUDO service "$service_" "${action_}" "$param_"
+                    $SUDO ln -s "/etc/sv/$service_" "/etc/service/"
+                else
+                    $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
+                    fi ;;
+                    # there is no reload in runits sysv emulation
+                    reload) $SUDO "/etc/init.d/$service_" "force-reload" "$param_" ;;
+                    *) $SUDO "/etc/init.d/$service_" "${action_}" "$param_" ;;
+                esac
             else
-              $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
-            fi
+                # sysv/sysvinit-utils, upstart
+                if check_com -c service ; then
+                    $SUDO service "$service_" "${action_}" "$param_"
+                else
+                    $SUDO "/etc/init.d/$service_" "${action_}" "$param_"
+                fi
         fi
     }
 
-    function _grmlinitd () {
-        local -a scripts
-        scripts=( /etc/init.d/*(x:t) )
-        _describe "service startup script" scripts
-    }
+function _grmlinitd () {
+    local -a scripts
+    scripts=( /etc/init.d/*(x:t) )
+    _describe "service startup script" scripts
+}
 
-    for i in Start Restart Stop Force-Reload Reload Status ; do
-        eval "function $i () { __start_stop $i \"\$1\" \"\$2\" ; }"
-        compdef _grmlinitd $i
-    done
-    builtin unset -v i
+for i in Start Restart Stop Force-Reload Reload Status ; do
+    eval "function $i () { __start_stop $i \"\$1\" \"\$2\" ; }"
+    compdef _grmlinitd $i
+done
+builtin unset -v i
 fi
 
 #f1# Provides useful information on globbing
 function H-Glob () {
-    echo -e "
-    /      directories
-    .      plain files
-    @      symbolic links
-    =      sockets
-    p      named pipes (FIFOs)
-    *      executable plain files (0100)
-    %      device files (character or block special)
-    %b     block special files
-    %c     character special files
-    r      owner-readable files (0400)
-    w      owner-writable files (0200)
-    x      owner-executable files (0100)
-    A      group-readable files (0040)
-    I      group-writable files (0020)
-    E      group-executable files (0010)
-    R      world-readable files (0004)
-    W      world-writable files (0002)
-    X      world-executable files (0001)
-    s      setuid files (04000)
-    S      setgid files (02000)
-    t      files with the sticky bit (01000)
+echo -e "
+/      directories
+.      plain files
+@      symbolic links
+=      sockets
+p      named pipes (FIFOs)
+*      executable plain files (0100)
+%      device files (character or block special)
+%b     block special files
+%c     character special files
+r      owner-readable files (0400)
+w      owner-writable files (0200)
+x      owner-executable files (0100)
+A      group-readable files (0040)
+I      group-writable files (0020)
+E      group-executable files (0010)
+R      world-readable files (0004)
+W      world-writable files (0002)
+X      world-executable files (0001)
+s      setuid files (04000)
+S      setgid files (02000)
+t      files with the sticky bit (01000)
 
-  print *(m-1)          # Files modified up to a day ago
-  print *(a1)           # Files accessed a day ago
-  print *(@)            # Just symlinks
-  print *(Lk+50)        # Files bigger than 50 kilobytes
-  print *(Lk-50)        # Files smaller than 50 kilobytes
-  print **/*.c          # All *.c files recursively starting in \$PWD
-  print **/*.c~file.c   # Same as above, but excluding 'file.c'
-  print (foo|bar).*     # Files starting with 'foo' or 'bar'
-  print *~*.*           # All Files that do not contain a dot
-  chmod 644 *(.^x)      # make all plain non-executable files publically readable
-  print -l *(.c|.h)     # Lists *.c and *.h
-  print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
-  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
+print *(m-1)          # Files modified up to a day ago
+print *(a1)           # Files accessed a day ago
+print *(@)            # Just symlinks
+print *(Lk+50)        # Files bigger than 50 kilobytes
+print *(Lk-50)        # Files smaller than 50 kilobytes
+print **/*.c          # All *.c files recursively starting in \$PWD
+print **/*.c~file.c   # Same as above, but excluding 'file.c'
+print (foo|bar).*     # Files starting with 'foo' or 'bar'
+print *~*.*           # All Files that do not contain a dot
+chmod 644 *(.^x)      # make all plain non-executable files publically readable
+print -l *(.c|.h)     # Lists *.c and *.h
+print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
+echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
 }
 alias help-zshglob=H-Glob
 
@@ -3212,11 +3214,11 @@ function any () {
 # After resuming from suspend, system is paging heavily, leading to very bad interactivity.
 # taken from $LINUX-KERNELSOURCE/Documentation/power/swsusp.txt
 [[ -r /proc/1/maps ]] && \
-function deswap () {
-    print 'Reading /proc/[0-9]*/maps and sending output to /dev/null, this might take a while.'
-    cat $(sed -ne 's:.* /:/:p' /proc/[0-9]*/maps | sort -u | grep -v '^/dev/')  > /dev/null
-    print 'Finished, running "swapoff -a; swapon -a" may also be useful.'
-}
+    function deswap () {
+        print 'Reading /proc/[0-9]*/maps and sending output to /dev/null, this might take a while.'
+        cat $(sed -ne 's:.* /:/:p' /proc/[0-9]*/maps | sort -u | grep -v '^/dev/')  > /dev/null
+        print 'Finished, running "swapoff -a; swapon -a" may also be useful.'
+    }
 
 # a wrapper for vim, that deals with title setting
 #   VIM_OPTIONS
@@ -3235,35 +3237,35 @@ ssl_hashes=( sha512 sha256 sha1 md5 )
 
 for sh in ${ssl_hashes}; do
     eval 'ssl-cert-'${sh}'() {
-        emulate -L zsh
-        if [[ -z $1 ]] ; then
-            printf '\''usage: %s <file>\n'\'' "ssh-cert-'${sh}'"
-            return 1
-        fi
-        openssl x509 -noout -fingerprint -'${sh}' -in $1
-    }'
+    emulate -L zsh
+    if [[ -z $1 ]] ; then
+        printf '\''usage: %s <file>\n'\'' "ssh-cert-'${sh}'"
+        return 1
+    fi
+    openssl x509 -noout -fingerprint -'${sh}' -in $1
+}'
 done; unset sh
 
 function ssl-cert-fingerprints () {
-    emulate -L zsh
-    local i
-    if [[ -z $1 ]] ; then
-        printf 'usage: ssl-cert-fingerprints <file>\n'
-        return 1
-    fi
-    for i in ${ssl_hashes}
-        do ssl-cert-$i $1;
-    done
+emulate -L zsh
+local i
+if [[ -z $1 ]] ; then
+    printf 'usage: ssl-cert-fingerprints <file>\n'
+    return 1
+fi
+for i in ${ssl_hashes}
+do ssl-cert-$i $1;
+done
 }
 
 function ssl-cert-info () {
-    emulate -L zsh
-    if [[ -z $1 ]] ; then
-        printf 'usage: ssl-cert-info <file>\n'
-        return 1
-    fi
-    openssl x509 -noout -text -in $1
-    ssl-cert-fingerprints $1
+emulate -L zsh
+if [[ -z $1 ]] ; then
+    printf 'usage: ssl-cert-info <file>\n'
+    return 1
+fi
+openssl x509 -noout -text -in $1
+ssl-cert-fingerprints $1
 }
 
 # make sure our environment is clean regarding colors
@@ -3369,64 +3371,64 @@ function bk () {
             r) unset move keep && (( ++clean ));;
             v) verbose="-v";;
             h) <<__EOF0__
-bk [-hcmv] FILE [FILE ...]
-bk -r [-av] [FILE [FILE ...]]
-Backup a file or folder in place and append the timestamp
-Remove backups of a file or folder, or all backups in the current directory
+                bk [-hcmv] FILE [FILE ...]
+                bk -r [-av] [FILE [FILE ...]]
+                Backup a file or folder in place and append the timestamp
+                Remove backups of a file or folder, or all backups in the current directory
 
-Usage:
--h    Display this help text
--c    Keep the file/folder as is, create a copy backup using cp(1) (default)
--m    Move the file/folder, using mv(1)
--r    Remove backups of the specified file or directory, using rm(1). If none
-      is provided, remove all backups in the current directory.
--a    Remove all (even hidden) backups.
--v    Verbose
+                Usage:
+                -h    Display this help text
+                -c    Keep the file/folder as is, create a copy backup using cp(1) (default)
+                -m    Move the file/folder, using mv(1)
+                -r    Remove backups of the specified file or directory, using rm(1). If none
+                is provided, remove all backups in the current directory.
+                -a    Remove all (even hidden) backups.
+                -v    Verbose
 
-The -c, -r and -m options are mutually exclusive. If specified at the same time,
-the last one is used.
+                The -c, -r and -m options are mutually exclusive. If specified at the same time,
+                the last one is used.
 
-The return code is the sum of all cp/mv/rm return codes.
+                The return code is the sum of all cp/mv/rm return codes.
 __EOF0__
 return 0;;
-            \?) bk -h >&2; return 1;;
-        esac
-    done
-    shift "$((OPTIND-1))"
-    if (( keep > 0 )); then
-        if islinux || isfreebsd; then
-            for to_bk in "$@"; do
-                cp $verbose -a "${to_bk%/}" "${to_bk%/}_$current_date"
-                (( result += $? ))
-            done
-        else
-            for to_bk in "$@"; do
-                cp $verbose -pR "${to_bk%/}" "${to_bk%/}_$current_date"
-                (( result += $? ))
-            done
-        fi
-    elif (( move > 0 )); then
-        while (( $# > 0 )); do
-            mv $verbose "${1%/}" "${1%/}_$current_date"
+\?) bk -h >&2; return 1;;
+esac
+done
+shift "$((OPTIND-1))"
+if (( keep > 0 )); then
+    if islinux || isfreebsd; then
+        for to_bk in "$@"; do
+            cp $verbose -a "${to_bk%/}" "${to_bk%/}_$current_date"
             (( result += $? ))
-            shift
         done
-    elif (( clean > 0 )); then
-        if (( $# > 0 )); then
-            for to_bk in "$@"; do
-                rm $verbose -rf "${to_bk%/}"_[0-9](#c8)T([0-1][0-9]|2[0-3])([0-5][0-9])(#c2)Z
-                (( result += $? ))
-            done
-        else
-            if (( all > 0 )); then
-                rm $verbose -rf *_[0-9](#c8)T([0-1][0-9]|2[0-3])([0-5][0-9])(#c2)Z(D)
-            else
-                rm $verbose -rf *_[0-9](#c8)T([0-1][0-9]|2[0-3])([0-5][0-9])(#c2)Z
-            fi
+    else
+        for to_bk in "$@"; do
+            cp $verbose -pR "${to_bk%/}" "${to_bk%/}_$current_date"
             (( result += $? ))
-        fi
+        done
     fi
-    return $result
+elif (( move > 0 )); then
+    while (( $# > 0 )); do
+        mv $verbose "${1%/}" "${1%/}_$current_date"
+        (( result += $? ))
+        shift
+    done
+elif (( clean > 0 )); then
+    if (( $# > 0 )); then
+        for to_bk in "$@"; do
+            rm $verbose -rf "${to_bk%/}"_[0-9](#c8)T([0-1][0-9]|2[0-3])([0-5][0-9])(#c2)Z
+            (( result += $? ))
+        done
+    else
+        if (( all > 0 )); then
+            rm $verbose -rf *_[0-9](#c8)T([0-1][0-9]|2[0-3])([0-5][0-9])(#c2)Z(D)
+        else
+            rm $verbose -rf *_[0-9](#c8)T([0-1][0-9]|2[0-3])([0-5][0-9])(#c2)Z
+        fi
+        (( result += $? ))
+    fi
+fi
+return $result
 }
 
 #f5# cd to directory and list files
@@ -3525,163 +3527,163 @@ function trans () {
 # Using option -d deletes the original archive file.
 #f5# Smart archive extractor
 function simple-extract () {
-    emulate -L zsh
-    setopt extended_glob noclobber
-    local ARCHIVE DELETE_ORIGINAL DECOMP_CMD USES_STDIN USES_STDOUT GZTARGET WGET_CMD
-    local RC=0
-    zparseopts -D -E "d=DELETE_ORIGINAL"
-    for ARCHIVE in "${@}"; do
-        case $ARCHIVE in
-            *(tar.bz2|tbz2|tbz))
-                DECOMP_CMD="tar -xvjf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *(tar.gz|tgz))
-                DECOMP_CMD="tar -xvzf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *(tar.xz|txz|tar.lzma))
-                DECOMP_CMD="tar -xvJf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *tar.zst)
-                DECOMP_CMD="tar --zstd -xvf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *tar)
-                DECOMP_CMD="tar -xvf -"
-                USES_STDIN=true
-                USES_STDOUT=false
-                ;;
-            *rar)
-                DECOMP_CMD="unrar x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *lzh)
-                DECOMP_CMD="lha x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *7z)
-                DECOMP_CMD="7z x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *(zip|jar))
-                DECOMP_CMD="unzip"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *deb)
-                DECOMP_CMD="ar -x"
-                USES_STDIN=false
-                USES_STDOUT=false
-                ;;
-            *bz2)
-                DECOMP_CMD="bzip2 -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *(gz|Z))
-                DECOMP_CMD="gzip -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *(xz|lzma))
-                DECOMP_CMD="xz -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *zst)
-                DECOMP_CMD="zstd -d -c -"
-                USES_STDIN=true
-                USES_STDOUT=true
-                ;;
-            *)
-                print "ERROR: '$ARCHIVE' has unrecognized archive type." >&2
-                RC=$((RC+1))
-                continue
-                ;;
-        esac
+emulate -L zsh
+setopt extended_glob noclobber
+local ARCHIVE DELETE_ORIGINAL DECOMP_CMD USES_STDIN USES_STDOUT GZTARGET WGET_CMD
+local RC=0
+zparseopts -D -E "d=DELETE_ORIGINAL"
+for ARCHIVE in "${@}"; do
+    case $ARCHIVE in
+        *(tar.bz2|tbz2|tbz))
+            DECOMP_CMD="tar -xvjf -"
+            USES_STDIN=true
+            USES_STDOUT=false
+            ;;
+        *(tar.gz|tgz))
+            DECOMP_CMD="tar -xvzf -"
+            USES_STDIN=true
+            USES_STDOUT=false
+            ;;
+        *(tar.xz|txz|tar.lzma))
+            DECOMP_CMD="tar -xvJf -"
+            USES_STDIN=true
+            USES_STDOUT=false
+            ;;
+        *tar.zst)
+            DECOMP_CMD="tar --zstd -xvf -"
+            USES_STDIN=true
+            USES_STDOUT=false
+            ;;
+        *tar)
+            DECOMP_CMD="tar -xvf -"
+            USES_STDIN=true
+            USES_STDOUT=false
+            ;;
+        *rar)
+            DECOMP_CMD="unrar x"
+            USES_STDIN=false
+            USES_STDOUT=false
+            ;;
+        *lzh)
+            DECOMP_CMD="lha x"
+            USES_STDIN=false
+            USES_STDOUT=false
+            ;;
+        *7z)
+            DECOMP_CMD="7z x"
+            USES_STDIN=false
+            USES_STDOUT=false
+            ;;
+        *(zip|jar))
+            DECOMP_CMD="unzip"
+            USES_STDIN=false
+            USES_STDOUT=false
+            ;;
+        *deb)
+            DECOMP_CMD="ar -x"
+            USES_STDIN=false
+            USES_STDOUT=false
+            ;;
+        *bz2)
+            DECOMP_CMD="bzip2 -d -c -"
+            USES_STDIN=true
+            USES_STDOUT=true
+            ;;
+        *(gz|Z))
+            DECOMP_CMD="gzip -d -c -"
+            USES_STDIN=true
+            USES_STDOUT=true
+            ;;
+        *(xz|lzma))
+            DECOMP_CMD="xz -d -c -"
+            USES_STDIN=true
+            USES_STDOUT=true
+            ;;
+        *zst)
+            DECOMP_CMD="zstd -d -c -"
+            USES_STDIN=true
+            USES_STDOUT=true
+            ;;
+        *)
+            print "ERROR: '$ARCHIVE' has unrecognized archive type." >&2
+            RC=$((RC+1))
+            continue
+            ;;
+    esac
 
-        if ! check_com ${DECOMP_CMD[(w)1]}; then
-            echo "ERROR: ${DECOMP_CMD[(w)1]} not installed." >&2
-            RC=$((RC+2))
+    if ! check_com ${DECOMP_CMD[(w)1]}; then
+        echo "ERROR: ${DECOMP_CMD[(w)1]} not installed." >&2
+        RC=$((RC+2))
+        continue
+    fi
+
+    GZTARGET="${ARCHIVE:t:r}"
+    if [[ -f $ARCHIVE ]] ; then
+
+        print "Extracting '$ARCHIVE' ..."
+        if $USES_STDIN; then
+            if $USES_STDOUT; then
+                ${=DECOMP_CMD} < "$ARCHIVE" > $GZTARGET
+            else
+                ${=DECOMP_CMD} < "$ARCHIVE"
+            fi
+        else
+            if $USES_STDOUT; then
+                ${=DECOMP_CMD} "$ARCHIVE" > $GZTARGET
+            else
+                ${=DECOMP_CMD} "$ARCHIVE"
+            fi
+        fi
+        [[ $? -eq 0 && -n "$DELETE_ORIGINAL" ]] && rm -f "$ARCHIVE"
+
+    elif [[ "$ARCHIVE" == (#s)(https|http|ftp)://* ]] ; then
+        if check_com curl; then
+            WGET_CMD="curl -L -s -o -"
+        elif check_com wget; then
+            WGET_CMD="wget -q -O -"
+        elif check_com fetch; then
+            WGET_CMD="fetch -q -o -"
+        else
+            print "ERROR: neither wget, curl nor fetch is installed" >&2
+            RC=$((RC+4))
             continue
         fi
-
-        GZTARGET="${ARCHIVE:t:r}"
-        if [[ -f $ARCHIVE ]] ; then
-
-            print "Extracting '$ARCHIVE' ..."
-            if $USES_STDIN; then
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} < "$ARCHIVE" > $GZTARGET
-                else
-                    ${=DECOMP_CMD} < "$ARCHIVE"
-                fi
+        print "Downloading and Extracting '$ARCHIVE' ..."
+        if $USES_STDIN; then
+            if $USES_STDOUT; then
+                ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD} > $GZTARGET
+                RC=$((RC+$?))
             else
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} "$ARCHIVE" > $GZTARGET
-                else
-                    ${=DECOMP_CMD} "$ARCHIVE"
-                fi
+                ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD}
+                RC=$((RC+$?))
             fi
-            [[ $? -eq 0 && -n "$DELETE_ORIGINAL" ]] && rm -f "$ARCHIVE"
-
-        elif [[ "$ARCHIVE" == (#s)(https|http|ftp)://* ]] ; then
-            if check_com curl; then
-                WGET_CMD="curl -L -s -o -"
-            elif check_com wget; then
-                WGET_CMD="wget -q -O -"
-            elif check_com fetch; then
-                WGET_CMD="fetch -q -o -"
-            else
-                print "ERROR: neither wget, curl nor fetch is installed" >&2
-                RC=$((RC+4))
-                continue
-            fi
-            print "Downloading and Extracting '$ARCHIVE' ..."
-            if $USES_STDIN; then
-                if $USES_STDOUT; then
-                    ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD} > $GZTARGET
-                    RC=$((RC+$?))
-                else
-                    ${=WGET_CMD} "$ARCHIVE" | ${=DECOMP_CMD}
-                    RC=$((RC+$?))
-                fi
-            else
-                if $USES_STDOUT; then
-                    ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE") > $GZTARGET
-                else
-                    ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE")
-                fi
-            fi
-
         else
-            print "ERROR: '$ARCHIVE' is neither a valid file nor a supported URI." >&2
-            RC=$((RC+8))
+            if $USES_STDOUT; then
+                ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE") > $GZTARGET
+            else
+                ${=DECOMP_CMD} =(${=WGET_CMD} "$ARCHIVE")
+            fi
         fi
-    done
-    return $RC
+
+    else
+        print "ERROR: '$ARCHIVE' is neither a valid file nor a supported URI." >&2
+        RC=$((RC+8))
+    fi
+done
+return $RC
 }
 
 function __archive_or_uri () {
     _alternative \
         'files:Archives:_files -g "*.(#l)(tar.bz2|tbz2|tbz|tar.gz|tgz|tar.xz|txz|tar.lzma|tar|rar|lzh|7z|zip|jar|deb|bz2|gz|Z|xz|lzma)"' \
         '_urls:Remote Archives:_urls'
-}
+    }
 
 function _simple_extract () {
     _arguments \
         '-d[delete original archivefile after extraction]' \
         '*:Archive Or Uri:__archive_or_uri'
-}
+    }
 compdef _simple_extract simple-extract
 [[ -n "$GRML_NO_SMALL_ALIASES" ]] || alias se=simple-extract
 
@@ -3702,10 +3704,10 @@ function xtrename () {
         printf '  also works without screen.\n'
         printf '  will not work if DISPLAY is unset, use -f to override.\n'
         return 0
-    fi
-    print -n "\eP\e]0;${1}\C-G\e\\"
-    return 0
-}
+        fi
+        print -n "\eP\e]0;${1}\C-G\e\\"
+        return 0
+    }
 
 # Create small urls via http://goo.gl using curl(1).
 # API reference: https://code.google.com/apis/urlshortener/
@@ -3773,7 +3775,7 @@ function whatwhen () {
         ("")
             printf '%s\n\n' 'ERROR: No search string specified. Aborting.'
             printf '%s\n%s\n\n' ${usage} ${help} && return 1
-        ;;
+            ;;
         (-h)
             printf '%s\n\n' ${usage}
             print 'OPTIONS:'
@@ -3787,16 +3789,16 @@ function whatwhen () {
             printf ${format_l/(\\t)/} 'whatwhen grml' '# Range is set to -100 by default.'
             printf $format_l 'whatwhen zsh -250'
             printf $format_l 'whatwhen foo 1 99'
-        ;;
+            ;;
         (\?)
             printf '%s\n%s\n\n' ${usage} ${help} && return 1
-        ;;
+            ;;
         (*)
             # -l list results on stout rather than invoking $EDITOR.
             # -i Print dates as in YYYY-MM-DD.
             # -m Search for a - quoted - pattern within the history.
             fc -li -m "*${first_char}${remain}*" $first $last
-        ;;
+            ;;
     esac
 }
 
@@ -3809,7 +3811,7 @@ if check_com -c hg ; then
         emulate -L zsh
         local i
         for i in $(hg status -marn "$@") ; diff -ubwd <(hg cat "$i") "$i"
-    }
+        }
 
     # build debian package
     #a2# Alias for \kbd{hg-buildpackage}
@@ -3864,25 +3866,25 @@ if (( GRMLSMALL_SPECIFIC > 0 )) && isgrmlsmall ; then
             autoload -Uz _dig
             unfunction dig_after_all
         }
-        function dig () {
-            if [[ -x ${commands[dig]} ]]; then
-                dig_after_all
-                command dig "$@"
-                return "$!"
-            fi
-            printf 'This installation does not include `dig'\'' for size reasons.\n'
-            printf 'Try `drill'\'' as a light weight alternative.\n'
-            return 0
-        }
-        function _dig () {
-            if [[ -x ${commands[dig]} ]]; then
-                dig_after_all
-                zle -M 'Found `dig'\'' installed. '
-            else
-                zle -M 'Try `drill'\'' instead of `dig'\''.'
-            fi
-        }
-        compdef _dig dig
+    function dig () {
+        if [[ -x ${commands[dig]} ]]; then
+            dig_after_all
+            command dig "$@"
+            return "$!"
+        fi
+        printf 'This installation does not include `dig'\'' for size reasons.\n'
+        printf 'Try `drill'\'' as a light weight alternative.\n'
+        return 0
+    }
+function _dig () {
+    if [[ -x ${commands[dig]} ]]; then
+        dig_after_all
+        zle -M 'Found `dig'\'' installed. '
+    else
+        zle -M 'Try `drill'\'' instead of `dig'\''.'
+    fi
+}
+compdef _dig dig
     fi
 fi
 
