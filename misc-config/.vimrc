@@ -1,5 +1,32 @@
 "au VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 " au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+nnoremap <Left> :echo "No left for you!"<CR>
+vnoremap <Left> :<C-u>echo "No left for you!"<CR>
+inoremap <Left> <C-o>:echo "No left for you!"<CR>
+
+nnoremap <Right> :echo "No right for you!"<CR>
+vnoremap <Right> :<C-u>echo "No right for you!"<CR>
+inoremap <Right> <C-o>:echo "No right for you!"<CR>
+
+nnoremap <Up> :echo "No up for you!"<CR>
+vnoremap <Up> :<C-u>echo "No up for you!"<CR>
+inoremap <Up> <C-o>:echo "No up for you!"<CR>
+
+nnoremap <Down> :echo "No down for you!"<CR>
+vnoremap <Down> :<C-u>echo "No down for you!"<CR>
+inoremap <Down> <C-o>:echo "No down for you!"<CR>
+
+nnoremap <PageUp> :echo "No pageUp for you!"<CR>
+vnoremap <PageUp> :<C-u>echo "No pageUp for you!"<CR>
+inoremap <PageUp> <C-o>:echo "No pageUp for you!"<CR>
+
+nnoremap <PageDown> :echo "No pageDown for you!"<CR>
+vnoremap <PageDown> :<C-u>echo "No PageDown for you!"<CR>
+inoremap <PageDown> <C-o>:echo "No PageDown for you!"<CR>
+
+" NERDTree setting defaults to work around http://github.com/scrooloose/nerdtree/issues/489
+set formatoptions-=cro
+
 set nocompatible
 
 set expandtab
@@ -60,34 +87,50 @@ set shiftwidth=4
 
 
 call plug#begin('~/.vim/plugged')
+
+" bottom bar
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
+
+" tree but emojie missing
+" Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+
+" Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf.vim'
+
 Plug 'tpope/vim-surround'
 Plug 'itchyny/vim-gitbranch'
 
+" brackets pairs / colors
 Plug 'jiangmiao/auto-pairs'
-
 Plug 'frazrepo/vim-rainbow'
 
+" relative line
 Plug 'ericbn/vim-relativize'
 
 
-Plug 'file://'.expand('~/apps/epistyle-master')
+" Coding stype private plug
+" Plug 'file://'.expand('~/apps/epistyle-master')
+
+" material theme
 Plug 'hzchirs/vim-material'
 
+" auto completion of rules
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+" auto correction and exec
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " {'do': { -> coc#util#install() }}
+
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
+" Clang format
 Plug 'Chiel92/vim-autoformat'
+
+" for the git diff
 Plug 'airblade/vim-gitgutter'
-Plug 'ryanoasis/vim-devicons'
 call plug#end()
 " ---- Key bind ------
 
@@ -120,12 +163,12 @@ nnoremap tn :tabnew<CR>
 
 "----- Folder gestion -----
 "
-map , :Files<CR>
-map <C-o> :NERDTreeToggle<CR>
-let NERDTreeQuitOnOpen = 1
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
+"map , :Files<CR>
+"map <C-o> :NERDTreeToggle<CR>
+"let NERDTreeQuitOnOpen = 1
+"let NERDTreeAutoDeleteBuffer = 1
+"let NERDTreeMinimalUI = 1
+"let NERDTreeDirArrows = 1
 let g:lightline = {
             \ 'colorscheme': 'challenger_deep',
             \ 'active': {
@@ -137,6 +180,10 @@ let g:lightline = {
             \ },
             \ }
 
+" nnoremap <leader>n :NERDTreeFocus<CR>
+" nnoremap <C-n> :NERDTree<CR>
+" nnoremap <C-t> :NERDTreeToggle<CR>
+" nnoremap <C-f> :NERDTreeFind<CR>
 
 
 " -------- OMNICPP --------
@@ -269,9 +316,9 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
+"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
@@ -330,3 +377,6 @@ let g:DevIconsEnableFolderExtensionPatternMatching = 1
 let g:DevIconsDefaultFolderOpenSymbol=''
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol=''
 
+
+set sc
+command W w

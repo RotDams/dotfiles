@@ -1,3 +1,6 @@
+xterm*faceSize: 10
+xterm*renderFont: true
+
 ! ===================
 !       urxvt
 ! ===================
@@ -88,3 +91,5 @@ rofi.width:                 100
 rofi.padding:               200
 rofi.bw:                    0
 rofi.show-icons:            true
+
+

@@ -133,7 +133,9 @@ bindsym Print exec flameshot screen -n 1 -c
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 5+ unmute & ~/.config/i3/scripts/vol-notify"
 bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 5- unmute & ~/.config/i3/scripts/vol-notify"
-bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle & ~/.config/i3/scripts/vol-notify"
+# bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle & ~/.config/i3/scripts/vol-notify"
+bindsym XF86AudioMute exec "/usr/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle  & ~/.config/i3/scripts/vol-notify"
+
 
 bindsym Shift+XF86AudioRaiseVolume exec "amixer -q sset Master,0 1+ unmute & ~/.config/i3/scripts/vol-notify"
 bindsym Shift+XF86AudioLowerVolume exec "amixer -q sset Master,0 1- unmute & ~/.config/i3/scripts/vol-notify"
@@ -149,6 +151,9 @@ bindsym XF86AudioMicMute exec "amixer -q sset Dmic0 toggle"
  bindsym Shift+XF86MonBrightnessUp exec xbacklight -inc 1 & exec ~/.config/i3/scripts/brightness-notify
  bindsym Shift+XF86MonBrightnessDown exec xbacklight -dec 1 & exec ~/.config/i3/scripts/brightness-notify
 
+
+
+exec xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 
 ###############################
 #        WORKSPACES           #

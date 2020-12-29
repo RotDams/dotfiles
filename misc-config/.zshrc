@@ -1,3 +1,8 @@
+function virtual_env_prompt () {
+    REPLY=${VIRTUAL_ENV+(${VIRTUAL_ENV:t}) }
+}
+
+
 SSH_ENV="$HOME/.ssh/agent-environment"
 
 function start_agent {
@@ -58,6 +63,9 @@ alias addmake="cp -r ~/mk/. ."
 alias gf="gcc -Wall -Wextra -std=c99 -pedantic -Werror -fsanitize=address"
 alias capson="xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'"
 alias capsoff="xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'"
+alias currentenv="echo '$VIRTUAL_ENV'"
+alias gb="setxkbmap -layout gb -option caps:escape"
+alias cheader="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 # USAGE
 # If you are using this file as your ~/.zshrc file, please use ~/.zshrc.pre
 # and ~/.zshrc.local for your own customisations. The former file is read
@@ -719,6 +727,7 @@ COMPDUMPFILE=${COMPDUMPFILE:-${ZDOTDIR:-${HOME}}/.zcompdump}
 if zrcautoload compinit ; then
     typeset -a tmp
     zstyle -a ':grml:completion:compinit' arguments tmp
+
     compinit -d ${COMPDUMPFILE} "${tmp[@]}" || print 'Notice: no compinit available :('
     unset tmp
 else
@@ -2425,11 +2434,12 @@ function grml_prompt_addto () {
     fi
 }
 
+# CHANG THE PROMPT CONFIG <<<<<<<<<<<<<<<<<
 function prompt_grml_precmd () {
     emulate -L zsh
     local grmltheme=grml
     local -a left_items right_items
-    left_items=(rc change-root user at host path vcs percent)
+    left_items=(rc change-root virtual-env user at host path vcs percent)
     right_items=(sad-smiley)
 
     prompt_grml_precmd_worker
@@ -2461,6 +2471,7 @@ function prompt_grml_precmd_worker () {
     local -i vcscalled=0
 
     grml_prompt_addto PS1 "${left_items[@]}"
+
     if zstyle -T ":prompt:${grmltheme}:right:setup" use-rprompt; then
         grml_prompt_addto RPS1 "${right_items[@]}"
     fi
@@ -2483,7 +2494,7 @@ if zrcautoload promptinit && promptinit 2>/dev/null ; then
     # Since we define the required functions in here and not in files in
     # $fpath, we need to stick the theme's name into `$prompt_themes'
     # ourselves, since promptinit does not pick them up otherwise.
-    prompt_themes+=( grml grml-chroot grml-large )
+    prompt_themes+=( grml grml-chroot grml-large virtual-env)
     # Also, keep the array sorted...
     prompt_themes=( "${(@on)prompt_themes}" )
 else
@@ -3909,3 +3920,6 @@ PERL5LIB="/home/dams/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/dams/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/dams/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/dams/perl5"; export PERL_MM_OPT;
+
+
+grml_theme_add_token virtual-env -f virtual_env_prompt
