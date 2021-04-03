@@ -131,6 +131,9 @@ Plug 'Chiel92/vim-autoformat'
 
 " for the git diff
 Plug 'airblade/vim-gitgutter'
+
+Plug 'withgod/vim-sourcepawn'
+
 call plug#end()
 " ---- Key bind ------
 
@@ -156,6 +159,8 @@ nnoremap <M-g> :GitGutterToggle  <cr>
 let g:gitgutter_highlight_lines = 1
 let g:gitgutter_enabled = 0
 
+" for sourcepawn quickfix
+au FileType sourcepawn setlocal makeprg=/home/dams/perso/csgo/sourcemod-1.10.0-git6488-linux/addons/sourcemod/scripting/spcomp\ %
 
 " ----- TABS VIM ----
 nnoremap tn :tabnew<CR>
@@ -380,3 +385,18 @@ let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol=''
 
 set sc
 command W w
+
+let g:ale_linters_explicit = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_linters = {'c': ['clang'], 'cpp': ['clang', '-std=c++17']}
+
+
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++17'
+
+let g:ale_c_clang_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_clang_options = '-Wall -O2 -std=c++17'
+
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''

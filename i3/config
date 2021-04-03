@@ -51,6 +51,8 @@ client.background       $background
 # Applications
 exec_always --no-startup-id feh --bg-scale ~/.config/i3/pictures/night-city.png
 exec_always --no-startup-id picom
+exec_always --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd
+
 #exec_always --no-startup-id "killall polybar;polybar -r default"
 
 exec --no-startup-id "xrandr --output \"eDP1\" --primary --auto --output \"HDMI2\" --above \"eDP1\" --mode 1920x1080"

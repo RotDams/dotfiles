@@ -1,7 +1,28 @@
+
+function update_cmake ()
+{
+line="$(grep 'add_executable(.*' CMakeLists.txt)"
+project="$(echo $line | sed 's/add_executable(\(.*\)/\1/g')"
+
+echo "$(sed -e ':a' -e 'N' -e '$!ba' -e 's/add_executable([^\n]*\(\n[^)]*)\)*//g' CMakeLists.txt)" > CMakeLists.txt
+
+folder="."
+if [ $# -eq 1 ];then
+    folder="$1"
+fi
+
+files="$(find $folder -name "*.cc" -o -name "*.cpp" -o -name "*.c")"
+
+echo "add_executable(${project}" >> CMakeLists.txt
+
+echo "$files" >> CMakeLists.txt
+
+echo ")" >> CMakeLists.txt
+}
+
 function virtual_env_prompt () {
     REPLY=${VIRTUAL_ENV+(${VIRTUAL_ENV:t}) }
 }
-
 
 SSH_ENV="$HOME/.ssh/agent-environment"
 
@@ -13,6 +34,32 @@ function start_agent {
     . "${SSH_ENV}" > /dev/null
     #/usr/bin/ssh-add;
 }
+
+function create_cmake ()
+{
+    if [ $# -lt 2 ]; then
+        echo "1 args missing: [project name] [src folder]"
+    else
+echo "cmake_minimum_required(VERSION 3.17)
+project($1)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_definitions(-Wall -Werror -Wextra -pedantic -std=c++17)
+
+include_directories("${CMAKE_SOURCE_DIR}")
+
+target_link_libraries($1 criterion)
+
+add_executable($1
+    )" > CMakeLists.txt
+
+    update_cmake $2
+
+    fi
+}
+
+
 
 # Source SSH settings, if applicable
 
@@ -60,12 +107,15 @@ alias cf="cat *.c &
 clang-format *.c && clang-format -i *.c"
 alias gdb="gdb -q"
 alias addmake="cp -r ~/mk/. ."
-alias gf="gcc -Wall -Wextra -std=c99 -pedantic -Werror -fsanitize=address"
+alias gf="gcc -g -Wall -Wextra -std=c99 -pedantic -Werror -fsanitize=address"
+alias gf+="g++ -std=c++17 -g -Wall -Wextra -pedantic -Werror -fsanitize=address"
 alias capson="xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'"
 alias capsoff="xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'"
 alias currentenv="echo '$VIRTUAL_ENV'"
 alias gb="setxkbmap -layout gb -option caps:escape"
 alias cheader="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
+alias newcmake=create_cmake
+alias updatecmake=update_cmake
 # USAGE
 # If you are using this file as your ~/.zshrc file, please use ~/.zshrc.pre
 # and ~/.zshrc.local for your own customisations. The former file is read
@@ -2210,6 +2260,7 @@ grml_prompt_post_default=(
     vcs               ''
 )
 
+# tokenss <<<<<<<<<
 grml_prompt_token_default=(
     at                '@'
     battery           'GRML_BATTERY_LEVEL'
@@ -2221,7 +2272,8 @@ grml_prompt_token_default=(
     jobs              '[%j running job(s)] '
     newline           $'\n'
     path              '%40<..<%~%<< '
-    percent           '%# '
+    percent           '% '
+    crochet           '⚡ '
     rc                '%(?..%? )'
     rc-always         '%?'
     sad-smiley        '%(?..:()'
@@ -2439,7 +2491,8 @@ function prompt_grml_precmd () {
     emulate -L zsh
     local grmltheme=grml
     local -a left_items right_items
-    left_items=(rc change-root virtual-env user at host path vcs percent)
+    # left_items=(rc change-root virtual-env user at host path vcs percent)
+    left_items=(rc change-root virtual-env user at host path vcs crochet)
     right_items=(sad-smiley)
 
     prompt_grml_precmd_worker
@@ -3923,3 +3976,6 @@ PERL_MM_OPT="INSTALL_BASE=/home/dams/perl5"; export PERL_MM_OPT;
 
 
 grml_theme_add_token virtual-env -f virtual_env_prompt
+
+export PGDATA="$HOME/postgres_data"
+export PGHOST="/tmp"
