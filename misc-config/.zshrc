@@ -115,7 +115,9 @@ alias currentenv="echo '$VIRTUAL_ENV'"
 alias gb="setxkbmap -layout gb -option caps:escape"
 alias cheader="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias newcmake=create_cmake
-alias updatecmake=update_cmake
+alias cpucheck="cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor"
+alias cpuperf="sudo cpupower frequency-set --governor performance"
+alias cpusave="sudo cpupower frequency-set --governor powersave"
 # USAGE
 # If you are using this file as your ~/.zshrc file, please use ~/.zshrc.pre
 # and ~/.zshrc.local for your own customisations. The former file is read
@@ -2027,9 +2029,15 @@ grml_vcs_plain_formats=(
     rev-branchformat "%b:%r"
 )
 
+# <<<<<<<<<<<<<<<< git
+#grml_vcs_coloured_formats=(
+#    format "${MAGENTA}(${NO_COLOR}%s${MAGENTA})${YELLOW}-#${MAGENTA}[${GREEN}%b${MAGENTA}]${NO_COLOR} "
+#    actionformat "${MAGENTA}(${NO_COLOR}%s${MAGENTA})${YELLOW}-#${MAGENTA}[${GREEN}%b${YELLOW}|${RED}%a${MAGENTA}]${NO_COLOR} "
+#    rev-branchformat "%b${RED}:${YELLOW}%r"
+#)
 grml_vcs_coloured_formats=(
-    format "${MAGENTA}(${NO_COLOR}%s${MAGENTA})${YELLOW}-${MAGENTA}[${GREEN}%b${MAGENTA}]${NO_COLOR} "
-    actionformat "${MAGENTA}(${NO_COLOR}%s${MAGENTA})${YELLOW}-${MAGENTA}[${GREEN}%b${YELLOW}|${RED}%a${MAGENTA}]${NO_COLOR} "
+    format "${MAGENTA}[${RED}%b${MAGENTA}]${NO_COLOR} "
+    actionformat "${MAGENTA}[${GREEN}%b${YELLOW}|${RED}%a${MAGENTA}]${NO_COLOR} "
     rev-branchformat "%b${RED}:${YELLOW}%r"
 )
 
@@ -2232,7 +2240,7 @@ grml_prompt_pre_default=(
     percent           ''
     rc                '%B%F{red}'
     rc-always         ''
-    sad-smiley        ''
+    sad-smiley        '%F{red}'
     shell-level       '%F{red}'
     time              '%F{blue}'
     user              '%B%F{blue}'
@@ -2271,7 +2279,8 @@ grml_prompt_token_default=(
     host              '%m '
     jobs              '[%j running job(s)] '
     newline           $'\n'
-    path              '%40<..<%~%<< '
+    path              '%15<..<%~%<< '
+#    path              '%40<..<%~%<< '
     percent           '% '
     crochet           '⚡ '
     rc                '%(?..%? )'
@@ -2492,8 +2501,9 @@ function prompt_grml_precmd () {
     local grmltheme=grml
     local -a left_items right_items
     # left_items=(rc change-root virtual-env user at host path vcs percent)
-    left_items=(rc change-root virtual-env user at host path vcs crochet)
-    right_items=(sad-smiley)
+    left_items=(rc change-root virtual-env user at host path crochet)
+    # right_items=(sad-smiley)
+    right_items=(vcs sad-smiley)
 
     prompt_grml_precmd_worker
 }
@@ -3979,3 +3989,6 @@ grml_theme_add_token virtual-env -f virtual_env_prompt
 
 export PGDATA="$HOME/postgres_data"
 export PGHOST="/tmp"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C "/usr/bin/symfony self:autocomplete --zsh" symfony
