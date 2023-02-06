@@ -12,7 +12,7 @@ for i in /sys/class/hwmon/hwmon*/temp*_input; do
 done
 if type "xrandr"; then
     for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        if [ $m == 'eDP1' ] 
+        if [ $m == 'eDP-1' ] 
         then		
             MONITOR=$m polybar --reload default &
         elif [ $m == 'HDMI0' ]

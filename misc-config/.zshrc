@@ -89,6 +89,9 @@ export EDITOR="$VISUAL"
 ################################################################################
 
 #alias
+
+alias fixvol="pulseaudio -k"
+alias fixdiscord="sudo vim /opt/discord/resources/build_info.json"
 alias br="xrandr --output eDP1 --brightness"
 alias vol="alsamixer"
 alias stats="conky -b &"

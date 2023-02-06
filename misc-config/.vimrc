@@ -1,28 +1,28 @@
 "au VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 " au VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-nnoremap <Left> :echo "No left for you!"<CR>
-vnoremap <Left> :<C-u>echo "No left for you!"<CR>
-inoremap <Left> <C-o>:echo "No left for you!"<CR>
+"nnoremap <Left> :echo "No left for you!"<CR>
+"vnoremap <Left> :<C-u>echo "No left for you!"<CR>
+"inoremap <Left> <C-o>:echo "No left for you!"<CR>
 
-nnoremap <Right> :echo "No right for you!"<CR>
-vnoremap <Right> :<C-u>echo "No right for you!"<CR>
-inoremap <Right> <C-o>:echo "No right for you!"<CR>
+"nnoremap <Right> :echo "No right for you!"<CR>
+"vnoremap <Right> :<C-u>echo "No right for you!"<CR>
+"inoremap <Right> <C-o>:echo "No right for you!"<CR>
 
-nnoremap <Up> :echo "No up for you!"<CR>
-vnoremap <Up> :<C-u>echo "No up for you!"<CR>
-inoremap <Up> <C-o>:echo "No up for you!"<CR>
+"nnoremap <Up> :echo "No up for you!"<CR>
+"vnoremap <Up> :<C-u>echo "No up for you!"<CR>
+"inoremap <Up> <C-o>:echo "No up for you!"<CR>
 
-nnoremap <Down> :echo "No down for you!"<CR>
-vnoremap <Down> :<C-u>echo "No down for you!"<CR>
-inoremap <Down> <C-o>:echo "No down for you!"<CR>
+"nnoremap <Down> :echo "No down for you!"<CR>
+"vnoremap <Down> :<C-u>echo "No down for you!"<CR>
+"inoremap <Down> <C-o>:echo "No down for you!"<CR>
 
-nnoremap <PageUp> :echo "No pageUp for you!"<CR>
-vnoremap <PageUp> :<C-u>echo "No pageUp for you!"<CR>
-inoremap <PageUp> <C-o>:echo "No pageUp for you!"<CR>
+"nnoremap <PageUp> :echo "No pageUp for you!"<CR>
+"vnoremap <PageUp> :<C-u>echo "No pageUp for you!"<CR>
+"inoremap <PageUp> <C-o>:echo "No pageUp for you!"<CR>
 
-nnoremap <PageDown> :echo "No pageDown for you!"<CR>
-vnoremap <PageDown> :<C-u>echo "No PageDown for you!"<CR>
-inoremap <PageDown> <C-o>:echo "No PageDown for you!"<CR>
+"nnoremap <PageDown> :echo "No pageDown for you!"<CR>
+"vnoremap <PageDown> :<C-u>echo "No PageDown for you!"<CR>
+"inoremap <PageDown> <C-o>:echo "No PageDown for you!"<CR>
 
 " NERDTree setting defaults to work around http://github.com/scrooloose/nerdtree/issues/489
 set formatoptions-=cro

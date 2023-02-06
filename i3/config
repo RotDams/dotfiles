@@ -48,6 +48,12 @@ client.urgent           $active     $active    	$background    #900000   $active
 client.placeholder      $background $background $foreground    #000000   $inactive
 client.background       $background
 
+
+exec_always --no-startup-id setxkbmap -model pc105 -layout gb -variant extd -option terminate:ctrl_alt_bksp
+
+# exec_always --no-startup-id xfce4-power-manager
+exec --no-startup-id sleep 3 &amp;&amp; xfce4-power-manager
+
 # Applications
 exec_always --no-startup-id feh --bg-scale ~/.config/i3/pictures/night-city.png
 exec_always --no-startup-id picom
@@ -55,9 +61,9 @@ exec_always --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd
 
 #exec_always --no-startup-id "killall polybar;polybar -r default"
 
-exec --no-startup-id "xrandr --output \"eDP1\" --primary --auto --output \"HDMI2\" --above \"eDP1\" --mode 1920x1080"
+exec --no-startup-id "xrandr --output eDP-1 --primary --auto --output HDMI-2 --above eDP-1 --mode 1920x1080"
+exec --no-startup-id "xrandr --output eDP-1 --primary --auto --output HDMI-2 --above eDP-1 --mode 1920x1080 --output eDP-1 --right-of HDMI-2 --mode 1920x1080"
 
-exec --no-startup-id "xrandr --output \"eDP1\" --primary --auto --output \"HDMI2\" --above \"eDP1\" --mode 1920x1080 --output \"DP1\" --right-of \"HDMI2\" --mode 1920x1080"
 exec_always --no-startup-id "~/.config/polybar/launch_polybar.sh"
 
 exec --no-startup-id "amixer -c 0 set Master playback 0% unmute"
